@@ -1,0 +1,33 @@
+{% extends "otakuProjectnendoroidBundle::layout.html.twig" %}
+{% block title %}{{ parent() }} - {{ app.user.username }}{% endblock %}
+{% block logo %}
+{{ parent() }} 
+{{ app.user.username }}
+-
+<a href="{{ path('otaku_project_list') }}">Liste</a>
+{% endblock %}
+{% block body %}
+	<div id="contentListNendo">
+		{% for nendo in nendoroids %}
+			<div class="flipCard" ontouchstart="this.classList.toggle('hover');">
+				<div class="flipCardContent">
+					<div class="flipCardFront">
+						<h2>{{nendo.number}}</h2>
+						<div class="img" style="background-image: url('{{ asset('images/nendoroids/'~nendo.number~'.jpg') }}');"></div>
+						<h1>{{nendo.name}}</h1>
+					</div>
+					<div class="flipCardBack">
+						<h2>N/A</h2>
+						<h2>{{nendo.number}}</h2>
+						<h2>N/A</h2>
+						<h1>{{nendo.name}}</h1>
+						<h1>{{nendo.price}}</h1>
+						<h2>N/A</h2>
+						<div class="img" style="background-image: url('{{ asset('images/nendoroids/'~nendo.number~'.jpg') }}');"></div>
+						<span><a href="{{ path('otaku_project_dislike' , { 'idNendo' : nendo.id }) }}">❤️ Je n'aime plus</a></span>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

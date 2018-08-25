@@ -1,0 +1,67 @@
+
+
+otaku_project_list:
+    path: /list
+    defaults:
+      _controller: otakuProjectnendoroidBundle:Nendoroid:list
+
+otaku_project_list_alt:
+    path: /listAlt
+    defaults:
+      _controller: otakuProjectnendoroidBundle:Nendoroid:listAlt
+
+otaku_project_user:
+    path: /user/{username}
+    defaults:
+      _controller: otakuProjectnendoroidBundle:Nendoroid:userInfo
+
+get_all_lists:
+    path: /allLists
+    defaults:
+      _controller: otakuProjectnendoroidBundle:Nendoroid:getUserListsAjax
+      methods: [post]
+
+# otaku_project_edit:
+#     path: /edit/{idNendo}
+#     defaults:
+#       _controller: otakuProjectnendoroidBundle:Nendoroid:edit
+
+# AJAX List
+
+generate_redirect_user_ajax:
+  path: /redirect/user
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:redirectUserAjax
+    methods: [post]
+
+generate_list_ajax:
+  path: /generate/list
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:generateList
+    methods: [post]
+
+generate_list_range_ajax:
+  path: /generate/listRange
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:generateListRange
+    methods: [post]
+
+nendoroid_ajax:
+  path: /listNendo
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:nendoroidAjax
+    methods: [post]
+
+# AJAX Recherche
+
+search_nendoroid_ajax:
+  path: /search
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:searchAjax
+    methods: [post]
+
+list_users_ajax:
+  path: /listUsers
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:generateUsersAjax
+    methods: [post]

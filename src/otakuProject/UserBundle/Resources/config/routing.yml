@@ -1,0 +1,3 @@
+otaku_projectuser_homepage:
+    path:     /
+    defaults: { _controller: otakuProjectUserBundle:Default:index }

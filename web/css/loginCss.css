@@ -1,0 +1,168 @@
+#login {
+    height: 100vh;
+    width: 100%;
+    min-height: 450px;
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),url(../images/otakuProjectBg.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+.loginContent {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: double 10px rgba(255, 223, 223, 0.5);
+}
+
+form {
+    height: 550px;
+    width: 550px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.6);
+    border: 8px double pink;
+    box-shadow: 0px 0px 40px aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;	
+    position: relative;
+    padding: 45px;
+}
+
+.titleContent, .informationsContent, .inputsContent, .submitContent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	/*flex: auto;*/
+}
+
+.titleContent h1 {
+    color: beige;
+    font-family: 'Indie Flower';
+    font-size: 4em;
+    letter-spacing: 5px;
+}
+
+.inputsContent {
+	justify-content: space-around;
+	margin-top: 10px;
+}
+
+.informationsContent p {
+	font-size: 1.2em;
+    font-family: 'indie flower';
+    letter-spacing: 1px;
+    color: pink;
+    text-align: justify;
+    line-height: 25px;
+}
+
+.informationsContent span {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.informationsContenta {
+    color: beige;
+    font-weight: bold;
+}
+
+input {
+    font-family: 'Indie Flower';
+	background-color: unset;
+    font-size: 1.5em;
+    color: beige;
+	
+}
+
+input[type=text],input[type=password] {
+    height: 50px;
+    width: 35%;
+    padding: 15px;
+    border: 1px beige solid;
+    border-radius: 20px;
+}
+
+input[type=text]:focus,input[type=password]:focus {
+    border: 1px pink solid;
+}
+
+input[type=submit] {
+    border: none;
+    cursor: pointer;
+    font-size: 2em;
+}
+
+@media screen and (max-width:720px) { 
+
+	.loginContent {
+		padding: 5px;
+		border: unset;
+	}
+
+	form {
+	    height: 100%;
+	    width: 100%;
+	    border-radius: 20px;
+	    padding: 20px;
+	    justify-content: space-evenly;
+	}
+
+	.titleContent, .informationsContent, .inputsContent, .submitContent {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		flex: unset;
+	}
+
+	.titleContent h1 {
+		font-size: 3em;
+		margin-bottom: 10px;
+	}
+
+	.informationsContent p {
+		font-size: 1em;
+		line-height: 1.2;
+	}
+
+	.informationsContent span {
+		font-size: 1.2em;
+	}
+
+	.inputsContent {
+		justify-content: space-around;
+	}
+
+	input[type=text],input[type=password] {
+		font-size: 1.2em;
+		letter-spacing: 2px;
+    	width: 45%;
+    	padding: 5px 5px 5px 15px;
+    	margin: 5px;
+	}
+
+	.errorMessage {
+		position: fixed;
+	    top: 0;
+	    left: 0;
+	    background-color: red;
+	    color: beige;
+	    margin: 20px;
+	    height: 200px;
+	    font-size: 2em;
+	    font-family: 'indie flower';
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    border-radius: 50%;
+	    border: 10px double beige;
+	    width: 200px;
+	    text-align: center;
+	    background: linear-gradient(#ff506f,pink);
+	}
+}

@@ -1,0 +1,46 @@
+{% if error %}
+    <div class="errorMessage" style="position: fixed;
+        top: 0;
+        left: 0;
+        background-color: red;
+        color: beige;
+        margin: 20px;
+        height: 200px;
+        font-size: 2em;
+        font-family: 'indie flower';
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        border: 10px double beige;
+        width: 200px;
+        text-align: center;
+        background: linear-gradient(#ff506f,pink);">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<section id="login">
+    <div class="loginContent">
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            {% endif %}
+            <div class="titleContent">
+                <h1>Nendoroid</h1>
+            </div>
+            <div class="informationsContent">
+                <p>To start sharing your favorite Nendoroids and/or your collection with others, you'll first need an account ! So, before all things, consider creating one by <span style="color: pink;" class="hvr-pulse-shrink"><a href="{{ path('fos_user_registration_register') }}">Signing Up</a></span> for exemple. Otherwise, if you've done it already, use the form below to sign in and enjoy !</p>
+            </div>
+            <div class="inputsContent">
+                    <input placeholder="Username" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                    <input placeholder="Password" type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+            </div>
+            <!-- <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> -->
+            <!-- <label for="remember_me">Remember me</label> -->
+            <div class="submitContent">
+                <input type="submit" id="_submit" name="_submit" value="Sign In" />
+            </div>
+        </form>
+        <script type="text/javascript">
+        $("#remember_me").hide();
+        </script>
+    </div>
+</section>

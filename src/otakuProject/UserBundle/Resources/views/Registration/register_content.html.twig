@@ -1,0 +1,20 @@
+<div id="register">
+	<div class="registerContent">
+		{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+		{{ form_widget(form) }}
+		<div class="submitContent hvr-shrink">
+			<input type="submit" value="I'm done !" />
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".required").remove();
+		$("#fos_user_registration_form_email").attr("placeholder" , "Email");
+		$("#fos_user_registration_form_username").attr("placeholder" , "Username");
+		$("#fos_user_registration_form_plainPassword_first").attr("placeholder" , "Password");
+		$("#fos_user_registration_form_plainPassword_second").attr("placeholder" , "Confirm your password");
+		$("#fos_user_registration_form").prepend("<div class=\"titleContent\"><h1>Sign Up</h1></div>");
+	});
+</script>

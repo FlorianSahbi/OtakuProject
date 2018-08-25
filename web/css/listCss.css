@@ -1,0 +1,509 @@
+.menuOpenButton {
+    height: 50px;
+    width: 50px;
+    margin: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+    color: #fb5b77;
+    border: 2px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: beige;
+    z-index: 15;
+}
+
+.desactivApp {
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    position: absolute;
+    z-index: 13;
+}
+
+.menu {
+    height: 100%;
+    width: 200px;
+    background: linear-gradient(pink,pink);
+    border-right: 5px solid beige;
+    position: fixed;
+    top: 0;
+    left: -205px;
+    z-index: 110;
+    box-shadow: 0px 0px 20px 2px black;
+}
+
+.menu h3 {
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-family: 'indie flower';
+}
+
+.menu p {
+    font-size: 1.3em;
+    font-family: 'indie flower';
+    margin-bottom: 10px;
+    margin-left: 5px;
+    display: flex;
+}
+
+.actionButton i {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.actionButton a {
+    width: 80%;
+}
+
+.separator {
+    height: 2px;
+    width: 100%;
+    border-bottom: 2px black solid;
+    margin: 10px 0;
+}
+
+.menuCloseButton {
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.menuContent {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    /*padding: 10px*/
+}
+
+.menuContent ul {
+    display: flex;
+    flex-direction: column;
+    height: 130%;
+    min-height: 600px;
+    width: 100%;
+    height: 100%;
+}
+
+.button {
+    width: 100%;
+    height: 30px;
+    background-color: pink;
+    background-image: linear-gradient( pink, rgba(255,255,255,0));
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    font-family: 'indie flower';
+    font-size: 1.2em;
+    color: black;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.button:hover {
+    background-color: beige;    
+}
+
+.buttonActive {
+    background-color: beige;    
+}
+
+.getProfil a {
+    color: black !important;
+}
+
+.getNendoroids {
+    opacity: 1 !important;
+    cursor: unset;
+}
+
+.getNendoroids i, .getUsers i {
+    width: 20%
+}
+.getNendoroids h4, .getUsers h4 {
+    width: 80%
+}
+
+.searchInputMenu {
+    padding: 0 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    background-color: unset;
+    border-radius: 10px;
+    padding: 0px 10px;
+    font-family: 'indie flower';
+    font-size: 1.5em;
+    letter-spacing: 3px;
+}
+
+.infosMenu {
+    font-size: 1em !important;
+    text-shadow: 1px 0.5px 1px #ff8181 !important;
+    font-family: 'indie flower';
+    margin-bottom: 10px;
+    margin-left: 5px;
+    display: flex;
+    color: beige;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+
+i {
+    width: 30px;
+    margin: 0 5px;
+}
+
+.nendoInterest {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px;
+    color: red;
+    text-shadow: 0px 0px 1px #000;
+    z-index: 5;
+}
+
+#nendoroidsList {
+    height: 100vh; 
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),url('../images/otakuProjectBg.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+}
+
+#nendoroidsList .content {    
+    flex: auto;
+    height: 100%; 
+    width: 100%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; 
+}
+
+#nendoroidsList .leftColumn {
+    height: 100%; 
+    width: 50%;
+    display: flex; 
+    flex: auto;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+#nendoroidsList .rightColumn {
+    height: 100%; 
+    width: 50%;
+    display: flex; 
+    flex: auto; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: auto;
+}
+
+#nendoroidsList .leftColumn .blockPreview {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: -30px;
+}
+
+#nendoroidsList .leftColumn .blockPreview img {
+ width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 5px 5px 30px black;
+    border: 10px pink double;
+    position: relative;
+    z-index: 5;
+    padding: 0px;
+    display: block;
+    max-width: 450px;
+    max-height: 550px;
+}
+
+#nendoroidsList .leftColumn .blockPreview ul {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+    bottom: 20px;
+}
+
+#nendoroidsList .leftColumn .blockPreview li {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    border: pink 3px double;
+    background-color: beige;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.addLikeButton {
+    border-radius: 5px 0px 15px 15px;
+}
+
+.addCollectionButton {
+    border-radius: 0px 5px 15px 15px;   
+}
+
+
+.loadScreen p span {
+    font-family: Indie Flower, cursive;
+    font-size: 2em;
+    color: pink;
+}
+
+.leftColumn p {
+    font-size: 1.5em;
+    font-family: indie flower,cursive;
+    color: #f5f5dc;
+    text-shadow: 1px 1px 1px black;
+    background-color: rgba(0,0,0, 0.5);
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px rgba(0,0,0);
+    padding: 10px;
+}
+            
+.cardNendo {
+    width: 100px;
+    height: 100px;
+    flex: auto;
+    background-color: lightgrey;
+    margin: 10px;
+    border-radius: 2px;
+    position: relative;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    background-size: 120%;
+    background-position: center center;
+    /*max-width: 120px;*/
+    /*max-height: 120px;*/
+}
+
+.cardUser {
+    color: beige;
+    font-size: 1.1em;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin: 10px;
+    border: 2px solid beige;
+    box-shadow: 0px 0px 16px black;
+    flex: auto;
+    flex-wrap: wrap;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    max-width: 100px;
+}
+
+.cardUser i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+
+.blockPreview .nendoName {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    margin-bottom: 6px;
+    color: beige;
+    background: linear-gradient(rgba(0,0,0,0), #ff5f7b, rgba(0,0,0,0));
+    padding: 5px;
+    border-radius: 6px;
+    font-family: indie flower;
+    text-shadow: 2px 2px 3px #000000;
+    letter-spacing: 4px;
+    position: absolute;
+    z-index: 5;
+    top: -63px;
+}
+
+.cardNendo:after {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border: 1px black solid;
+}
+
+.cardNendo:hover {
+    background-size: 150%;
+}
+
+
+.loadScreen {
+    height: 100vh; 
+    width: 100%; 
+    position: absolute; 
+    background-color: white; 
+    z-index: 99999; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.loadScreen p {
+    position: relative;
+    z-index: 5;
+}
+
+.loadScreen img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.loadScreen p {
+    font-family: Indie Flower, cursive;
+    font-size: 3em;
+    text-align: center;
+    margin-top: -100px;
+    z-index: 9;
+}
+
+.response {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    background-color: lightgreen;
+    border-radius: 5px 5px 0 0;
+    position: fixed;
+    bottom: -25px;
+    transition: all 0.5s ease;
+    z-index: 999;
+    font-family: "ABeeZee";
+}
+
+.responseActive {
+    bottom: 0;
+}
+
+.display h3 {
+    flex: auto;
+}
+
+@media screen and (max-width:900px) {
+    #nendoroidsList .content {
+        flex-direction: column;
+    }
+
+    #nendoroidsList .leftColumn {
+        width: 100%;
+        height: 50%;
+    }
+
+    #nendoroidsList .rightColumn {
+        width: 100%;
+        height: 50%;
+    } 
+
+    #nendoroidsList .leftColumn .blockPreview img {
+        max-width: 300px;
+        max-height: 220px;
+    }
+
+    .leftColumn p {
+        text-align: center;
+    }
+
+    .menuContent {
+        overflow: auto;
+    }
+
+    .menu p {
+        margin-bottom: 15px;
+    }
+
+   /* .button {
+        flex: auto;
+        width: 100%;
+        height: 60px;
+    }*/
+
+    #nendoroidsList .leftColumn .blockPreview ul {
+        width: 110%;
+        bottom: -15px;
+        z-index: 6;
+    }
+
+    #nendoroidsList .leftColumn .blockPreview li {
+        text-shadow: 0px 0px 10px beige;
+        width: 40px;
+        height: 40px;
+        border: beige 3px solid;
+        background-color: #ff8fa3;
+        font-size: 1.5em;
+        box-shadow: 3px 4px 10px black;
+    }
+
+    .blockPreview .nendoName {
+        width: 220px;
+        font-size: 1.3em;
+        z-index: 10;
+        text-align: center;
+    }
+
+    .loadScreen {
+        min-width: 290px;
+    }
+
+    .loadScreen p {
+        font-size: 1.5em;
+        z-index: 9;
+        padding: 5px;
+        top: -100px;
+        position: relative;
+    }
+}

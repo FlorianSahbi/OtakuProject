@@ -1,0 +1,38 @@
+{% extends "otakuProjectnendoroidBundle::layout.html.twig" %}
+{% block title %}{{ parent() }} - Liste{% endblock %}
+{% block logo %}{{ parent() }}-<a href="{{ path('otaku_project_user') }}">Mon Compte</a>{% endblock %}
+{% block body %}
+	<div id="contentListNendo">
+		<div class="flipCard" ontouchstart="this.classList.toggle('hover');">
+			<div class="flipCardContent">
+				<div class="flipCardFront">
+					<span class="addButton">+</span>
+				</div>
+				<div class="flipCardBack">
+					<span class="form">{{ form(form) }}</span>
+				</div>
+			</div>
+		</div>
+		{% for nendoroid in nendoroids %}
+			<div class="flipCard" ontouchstart="this.classList.toggle('hover');">
+				<div class="flipCardContent">
+					<div class="flipCardFront">
+						<h2>{{nendoroid.number}}</h2>
+						<div class="img" style="background-image: url('{{ asset('images/nendoroids/'~nendoroid.number~'.jpg') }}');"></div>
+						<h1>{{nendoroid.name}}</h1>
+					</div>
+					<div class="flipCardBack">
+						<h2>N/A</h2>
+						<h2>{{nendoroid.number}}</h2>
+						<h2>N/A</h2>
+						<h1>{{nendoroid.name}}</h1>
+						<h1>{{nendoroid.price}}</h1>
+						<h2>N/A</h2>
+						<div class="img" style="background-image: url('{{ asset('images/nendoroids/'~nendoroid.number~'.jpg') }}');"></div>
+						<span><a href="{{ path('otaku_project_like' , { 'idNendo' : nendoroid.id }) }}">❤️ J'aime</a></span>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

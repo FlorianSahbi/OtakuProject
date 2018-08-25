@@ -1,0 +1,4 @@
+services:
+#    otaku_projectnendoroid.example:
+#        class: otakuProject\nendoroidBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

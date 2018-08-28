@@ -30,26 +30,42 @@ class NendoroidController extends Controller
     $collectionList = $loggedInUser->getNendoroidsCollection();
     $likeList       = $loggedInUser->getNendoroidsLike();
 
-    foreach ($loveList as $nendoroid) 
+    if($loveList->isEmpty())
     {
-      $loveListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
+      $loveListArray[] = ['notice' => 'no Nendoroids here'];
     }
-    $loveListArray = ['state' => 'ok'];
-
-    foreach ($collectionList as $nendoroid) 
+    else 
     {
-      $collectionListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
-    }
-    $loveCollectionArray = ['state' => 'ok'];
+      foreach ($loveList as $nendoroid) 
+      {
+        $loveListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
+      }
+    } 
 
-
-    foreach ($likeList as $nendoroid) 
+    if ($collectionList->isEmpty())
     {
-      $likeListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
+      $collectionListArray[] = ['notice' => 'no Nendoroids here'];
     }
-    $likeListArray = ['state' => 'ok'];
+    else
+    {
+      foreach ($collectionList as $nendoroid) 
+      {
+        $collectionListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
+      }
+    }
 
-    
+    if($likeList->isEmpty())
+    {
+      $likeListArray[] = ['notice' => 'no Nendoroids here'];
+    }
+    else
+    {
+      foreach ($likeList as $nendoroid) 
+      {
+        $likeListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
+      }
+    }
+
     $allList =  array_merge($loveListArray , $collectionListArray , $likeListArray);
 
     return new JsonResponse(['nendoroids' => $allList]); 

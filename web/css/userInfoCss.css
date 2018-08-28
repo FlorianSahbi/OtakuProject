@@ -9,7 +9,6 @@
     flex: auto;
 }
 
-
 .card {
     height: 85%;
     width: 100px;
@@ -65,7 +64,7 @@ h1 {
 	background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(../images/otakuProjectBg.jpg);
 }
 
-.content {
+.userInfo .content {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -94,15 +93,7 @@ h1 {
 }
 
 .extend .fas {
-    /* background: pink; */
     color: beige;
-    /* height: 45px; */
-    /* width: 45px; */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* border-radius: 50%; */
-    /* border: 2px solid beige; */
     opacity: 0.5;
     font-size: 0.6em;
 }

@@ -1,52 +1,14 @@
-{% extends "otakuProjectnendoroidBundle::layout.html.twig" %}
-{% block title %}{{ parent() }} - List{% endblock %}
-{% block body %}
-<div class="bodyListContent">
-	<header>
-		<h2 style="margin-left: 15px;">Nendoroids : </h2>
-		<div class="rangeContent">
-			<p class="rangeSet"> 801 - 900<i class="fas fa-caret-down"></i></p>
-			<div id="001-100" class="rangeButton button hvr-shrink"></i>001 - 100</div>
-			<div id="101-200" class="rangeButton button hvr-shrink"></i>101 - 200</div>
-			<div id="201-300" class="rangeButton button hvr-shrink"></i>201 - 300</div>
-			<div id="301-400" class="rangeButton button hvr-shrink"></i>301 - 400</div>
-			<div id="401-500" class="rangeButton button hvr-shrink"></i>401 - 500</div>
-			<div id="501-600" class="rangeButton button hvr-shrink"></i>501 - 600</div>
-			<div id="601-700" class="rangeButton button hvr-shrink"></i>601 - 700</div>
-			<div id="701-800" class="rangeButton button hvr-shrink"></i>701 - 800</div>
-			<div id="801-900" class="rangeButton button hvr-shrink"></i>801 - 900</div>
-		</div>
-		<input type="text" name="searchBarNendoroids" placeholder="search" />
-		<div class="menuButton actionButton hvr-shrink menuInactive" ><i class="hvr-shrink fas fa-list-ul"></i><p>Menu</p></div>
-	</header>
-		<nav class="subNav">
-			<div class="myProfilButton actionButton hvr-shrink" ><a href="{{ path('otaku_project_user', {username : app.user.username }) }}"><i class="hvr-shrink fas fa-user"></i><p>My profil</p></a></div>
-			<div class="showUsersButton actionButton hvr-shrink" ><i class="hvr-shrink fas fa-users"></i><p>Show users</p></div>
-			<div class="showNendoroidsButton actionButton hvr-shrink" ><i class="hvr-shrink fas fa-list-ul"></i><p>Show nendoroids</p></div>
-			<div class="logoutButton actionButton hvr-shrink" ><a href="{{ path('fos_user_security_logout') }}"><i class="hvr-shrink fas fa-power-off"></i><p>Log out</p></a></div>
-		</nav>
-
-	<div class="showListButton"><i class="far fa-times-circle hvr-shrink"></i></div>
-
-	<!-- Frame -->
-	<section id="nendoroidsList">
-		<div class="content">
-			<div class="leftColumn"></div>
-			<div class="rightColumn"></div>
-		</div>
-		<div class="response"></div>
-	</section>
-	<!-- Frame End -->
-</div>
-
-	<script>
-		$(document).ready( function(){
+$(document).ready( function(){
 
 			generateAllNendo();
 
+			var menu = $(".menu");
+			var menuW = menu.width();
 			var menuCloseButton = $(".menuCloseButton");
 			var menuOpenButton = $(".menuOpenButton");
 			var profilButton = $(".getProfil");
+			var listUsersButton = $(".getUsers");
+			var listNendoroidsButton = $(".getNendoroids");
 			var loadScreen = $('.loadScreen');
 			var rangeButton = $(".rangeButton");
 			var rightColumn = $(".rightColumn");
@@ -55,39 +17,28 @@
 			var header = $("header");
 			var headerH = $("header").height();
 			var rangeButtonH = rangeButton.height();
-			var subNav = $(".subNav");
-			var subNavH = $(".subNav").height();
 
-			profilButton.on("click", function(){
-				loadScreen.fadeIn();
+			// rightColumn.css("display","none");
+			// loadScreen.css("display","none");
+
+			$(".delog").on("mouseover", function(){
+				$(".delog p").delay(200).fadeIn(100);
 			});
 
-			$(".menuButton").on("click", function(){
-				if($(this).hasClass("menuActive"))
-				{
-					subNav.animate({"top":0},500);
-					$(this).removeClass("menuActive");
-					$(this).addClass("menuInactive");
-				}
-				else
-				{
-					subNav.animate({"top":subNavH+5},500);
-					$(this).addClass("menuActive");
-					$(this).removeClass("menuInactive");	
-				}
+			$(".delog").on("mouseleave", function(){
+				$(".delog p").fadeOut(100);
 			});
 
-			$(".showUsersButton").on("click", function(){
-				generateAllUsers();
+			$(".userr").on("mouseover", function(){
+				$(".userr p").delay(250).fadeIn(100);
 			});
 
-			$(".showNendoroidsButton").on("click", function(){
-				generateAllNendo();
+			$(".userr").on("mouseleave", function(){
+				$(".userr p").fadeOut(100);
 			});
-
-			subNav.css("height", subNavH);
 
 			$(".rangeSet").on("click",function(){
+				// $(".rangeButton").animate({opacity:1},300);
 				$("#001-100").animate({top: rangeButtonH*2,opacity:1},500,);
 				$("#101-200").animate({top: rangeButtonH*3,opacity:1},500,);
 				$("#201-300").animate({top: rangeButtonH*4,opacity:1},500,);
@@ -108,12 +59,45 @@
 				$(".rangeButton").animate({top:mav2*2, opacity:0},300);
 			});
 
+
+
 			$(".showListButton").on("click", function(){
-				$(".rightColumn").animate({bottom:0}, 500);
-				$(".subNav").animate({top:0},500);
+				$(".rightColumn").animate({height:"94%"}, 500);
 				header.animate({top:0},500);
-				$(this).fadeOut();
 			});
+
+			menuOpenButton.on("click", function(){
+				menu.animate({ left : 0 }, 250);
+				$(".desactivApp").fadeIn(250);
+			});
+
+			menuCloseButton.on("click", function(){
+				menu.animate({ left : -menuW - 5 }, 250);
+				$(".desactivApp").fadeOut(250);
+			});
+
+			$(".desactivApp").on("click", function(){
+				menu.animate({ left : -menuW - 5 }, 250);
+				$(this).fadeOut(250);
+			});
+
+			// $("#801-900").addClass("buttonActive");
+			
+			
+			profilButton.on("click", function(){
+				loadScreen.fadeIn();
+			});
+
+			$(".userr").on("click", function(){
+				// $(".leftColumn").fadeOut();
+				generateAllUsers();
+			});
+
+			listNendoroidsButton.on("click", function(){
+				generateAllNendo();
+				$(".leftColumn").fadeIn();
+			});
+
 
 			$("input").keyup(function(){
 				var mot = $( this ).val();
@@ -126,7 +110,6 @@
 					.done(function(data){
 						var nendoroids = data['nendoroids'];
 						generateNendoroidCard(nendoroids);
-						getAllLists()
 						$(".leftColumn").fadeIn();
 					});
 				} 
@@ -134,7 +117,6 @@
 				{
 					$(".leftColumn").fadeIn();
 					generateAllNendo();
-					getAllLists()
 				}
 			});
 
@@ -149,14 +131,12 @@
 				.done(function(data){
 					var nendoroids = data['nendoroids'];
 					generateNendoroidCard(nendoroids);
-					getAllLists()
 				});
 			});
 		});
 
 		function generateNendoroidCard(nendoroids){
 			var rightColumn = $(".rightColumn");
-			var listH = rightColumn.height();
 			var leftColumn = $(".leftColumn");
 			var blockResponse = $(".response");
 			var nendoroid = nendoroids;
@@ -239,10 +219,8 @@
 						var headerH = $("header").height();
 
 						$(".leftColumn").html("");
-						$(".rightColumn").animate({bottom : -listH},500);
-						$("header").animate({top : -headerH},500);
-						$(".subNav").animate({top: -headerH},500);
-						$(".showListButton").fadeIn();
+						$(".rightColumn").animate({height:"0%"},500);
+						$("header").animate({top: -headerH},500);
 
 						$("<div/>", {
 							"class": "leftColumnContent"
@@ -349,5 +327,3 @@
 				});
 			});
 		}
-	</script>
-{% endblock %}

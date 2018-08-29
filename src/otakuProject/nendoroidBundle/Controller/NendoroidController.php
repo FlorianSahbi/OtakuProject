@@ -204,12 +204,6 @@ class NendoroidController extends Controller
     $response[] = ["message" => 'Figurine bien aime'];
     return new JsonResponse(['message' => $response]);
   } 
-
-  public function redirectUserAjaxAction(Request $request) {
-    $username = $request->request->get("user");
-    return $this->redirectToRoute('otaku_project_user', array('username' => $username));
-  }
-
 }
 
 // En attente //

@@ -181,7 +181,7 @@ a {
 .loadScreen p {
     position: relative;
     z-index: 5;
-    font-family: Indie Flower, cursive;
+    font-family: Audiowide, cursive;
     font-size: 3em;
     text-align: center;
     margin-top: -100px;
@@ -189,7 +189,7 @@ a {
 }
 
 .loadScreen p span {
-    font-family: Indie Flower, cursive;
+    font-family: Audiowide, cursive;
     font-size: 2em;
     color: pink;
 }

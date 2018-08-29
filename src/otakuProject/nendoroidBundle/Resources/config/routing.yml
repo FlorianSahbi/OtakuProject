@@ -28,12 +28,6 @@ get_all_lists:
 
 # AJAX List
 
-generate_redirect_user_ajax:
-  path: /redirect/user
-  defaults:
-    _controller: otakuProjectnendoroidBundle:Nendoroid:redirectUserAjax
-    methods: [post]
-
 generate_list_ajax:
   path: /generate/list
   defaults:

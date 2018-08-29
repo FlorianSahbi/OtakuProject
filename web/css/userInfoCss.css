@@ -54,7 +54,7 @@
 }
 
 h1 {
-	font-family: Indie Flower;
+	font-family: Orbitron;
 	color: beige;
 }
 
@@ -82,7 +82,8 @@ h1 {
 .listLike {}
 
 .content h1 {
-	font-size: 2em;
+    font-size: 2em;
+    font-family: 'audiowide';
 }
 
 .extendLove, .extendLike, .extendCollection {

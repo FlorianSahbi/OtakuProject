@@ -18,8 +18,8 @@
 }
 
 form {
-    height: 550px;
-    width: 550px;
+	height: 600px;
+    width: 600px;
     border-radius: 50%;
     background-color: rgba(0,0,0,.6);
     border: 8px double pink;
@@ -27,12 +27,12 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;	
+    flex-direction: column;
     position: relative;
-    padding: 45px;
+    padding: 90px;
 }
 
-.titleContent, .informationsContent, .inputsContent, .submitContent {
+.titleContent, .informationsContent, .inputsContent {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -40,9 +40,37 @@ form {
 	/*flex: auto;*/
 }
 
+.signupContent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.signupContent .or {
+    color: pink;
+    font-size: 1em;
+    font-family: 'orbitron';
+    margin: 10px 0
+}
+
+.signupContent .signupButton {
+	color: pink;
+    font-family: audiowide;
+    font-size: 2em;
+    text-shadow: 0px 0px 2px beige;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.signupContent .signupButton:hover {
+    text-shadow: 0px 0px 5px beige;
+}
+
 .titleContent h1 {
     color: beige;
-    font-family: 'Indie Flower';
+    font-family: 'AudioWide';
     font-size: 4em;
     letter-spacing: 5px;
 }
@@ -53,8 +81,8 @@ form {
 }
 
 .informationsContent p {
-	font-size: 1.2em;
-    font-family: 'indie flower';
+	font-size: 1em;
+    font-family: 'Orbitron';
     letter-spacing: 1px;
     color: pink;
     text-align: justify;
@@ -72,11 +100,10 @@ form {
 }
 
 input {
-    font-family: 'Indie Flower';
-	background-color: unset;
-    font-size: 1.5em;
+    font-family: 'AudioWide';
+    background-color: unset;
+    font-size: 1.2em;
     color: beige;
-	
 }
 
 input[type=text],input[type=password] {
@@ -95,6 +122,7 @@ input[type=submit] {
     border: none;
     cursor: pointer;
     font-size: 2em;
+    margin-top: 10px;
 }
 
 @media screen and (max-width:720px) { 

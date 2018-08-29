@@ -14,7 +14,7 @@ header {
     right: 0;
     z-index: 999;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     border-bottom: beige 2px solid;
     box-shadow: 0px 0px 10px beige;
@@ -22,8 +22,10 @@ header {
 }
 
 header h2 {
-    font-family: 'indie flower';
-    font-size: 1em;
+    font-family: 'AudioWide';
+    font-size: 2em;
+    position: relative;
+    left: -350px;
 }
 
 .rangeContent {
@@ -39,7 +41,7 @@ header h2 {
 .rangeSet {
     position: absolute;
     font-size: 1em;
-    font-family: 'indie flower';
+    font-family: 'Orbitron';
     cursor: pointer;
 }
 
@@ -49,66 +51,171 @@ header h2 {
 
 .rangeButton {
     font-size: 1em;
-    font-family: 'indie flower';
+    font-family: 'Orbitron';
     position: absolute;
     top: 54px;
     text-align: center;
-    height: 21px;
+    height: 35px;
     opacity: 0;
     background: linear-gradient(#ff8298,pink);
-    border-radius: 20px;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
-    width: 70px;
+    width: 110px;
     border-radius: 15px;
-    box-shadow: 0px 0px 7px black;
     border: 1px solid black;
     cursor: pointer;
 }
 
 header input[type="text"] {
-    width: 200px;
+    width: 150px;
     background-color: unset;
     border-radius: 10px;
     padding: 0px 10px;
-    font-family: 'indie flower';
+    font-family: 'Orbitron';
     font-size: 1em;
     letter-spacing: 2px;
     height: 35px;
-    flex: auto;
+    /*flex: auto;*/
 }
 
 /*Subnav*/
 .subNav {
-    width: 80%;
-    height: 45px;
-    background: linear-gradient(#ffbeca,#ff8da1);
-    border: 2px beige solid;
-    border-radius: 0 0 10px 10px;
-    position: absolute;
-    top: 0;
+    height: 160px;
+    width: 200px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: -200px;
     z-index: 1;
+    border: 2px beige solid;
+    background: linear-gradient(#ffbeca,#ff8da1);
+    border-radius: 0 0 10px 10px;
 }
 
-.myProfilButton, .showUsersButton, .showNendoroidsButton, .logoutButton, .menuButton {
-    background: pink;
+.myProfilButton {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myProfilButton p {
+    flex: auto;
+    font-size: 1.1em;
+}
+
+.myProfilButton i {
     margin: 0 10px;
-    height: 30px;
+    color: black;
+    height: auto;
+    width: 20px;
+}
+
+.showUsersButton {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showUsersButton p {
+    flex: auto;
+    font-size: 1.1em;
+}
+
+.showUsersButton i {
+    margin: 0 10px;
+    color: black;
+    height: auto;
+    width: 20px;
+}
+
+
+.showNendoroidsButton {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showNendoroidsButton p {
+    flex: auto;
+    font-size: 1.1em;
+}
+
+.showNendoroidsButton i {
+    margin: 0 10px;
+    color: black;
+    height: auto;
+    width: 20px;
+}
+
+.logoutButton {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoutButton p {
+    flex: auto;
+    font-size: 1.1em;
+}
+
+.logoutButton i {
+    margin: 0 10px;
+    color: black;
+    height: auto;
+    width: 20px;
+}
+
+
+
+.menuButton {
     display: flex !important;
     justify-content: center;
     align-items: center;
-    width: 140px;
-    border-radius: 50px;
-    border: 2px solid beige;
-    font-family: 'indie flower';
+    font-family: 'Orbitron';
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.5s ease;  
 }
+
+.menuButton i {
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.3em;
+}
+
+
+.myProfilButton, .showUsersButton, .showNendoroidsButton, .logoutButton {
+    height: 30px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-family: 'Orbitron';
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    color: black !important;
+}
+
+.myProfilButton, .showUsersButton:hover, .showNendoroidsButton, .logoutButton:hover {
+    /*background-color: rgba(0,0,0,0.1);*/
+}
+
 
 .myProfilButton a, .logoutButton a { 
     text-decoration: none !important;
@@ -121,9 +228,12 @@ header input[type="text"] {
 }
 
 .actionButton p {
-    margin-left: 10px;
-    font-size: 0.8em;
+    margin-left: 1px;
+    font-size: 1.5em;
+    margin-bottom: 1px;
 }
+
+
 /*Subnav End*/
 
 /*Header End*/
@@ -213,7 +323,7 @@ header input[type="text"] {
     color: beige;
     position: absolute;
     z-index: 1;
-    font-family: 'ABeezee';
+    font-family: 'Orbitron';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -234,7 +344,7 @@ header input[type="text"] {
 .cardNendo .cardNendoName, .cardNendo .cardNendoNumber {
     color: beige;
     z-index: 1;
-    font-family: 'ABeezee';
+    font-family: 'Orbitron';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -253,7 +363,7 @@ header input[type="text"] {
     color: beige;
     position: absolute;
     z-index: 1;
-    font-family: 'ABeezee';
+    font-family: 'Orbitron';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -322,7 +432,7 @@ header input[type="text"] {
 
 .informationsName {
     font-size: 4em;
-    font-family: 'Indie Flower';
+    font-family: 'Orbitron';
     color: beige;
     margin-bottom: 20px;
     letter-spacing: 2px;
@@ -357,11 +467,12 @@ header input[type="text"] {
 .addCollectionButton {}
 
 .informationsNumber {
-    font-size: 12em;
+    font-size: 6em;
     color: #232323;
     position: absolute;
     bottom: 10px;
     right: 0;
+    font-family: 'audiowide';
 }
 
 /*informations Screen Nendoroids End*/
@@ -405,7 +516,9 @@ header input[type="text"] {
     }
 
     .informationsName {
-        font-size: 3em;
+        font-size: 2em;
+        position: relative;
+        top: 35px;
     }
 
     .informationsNumber {

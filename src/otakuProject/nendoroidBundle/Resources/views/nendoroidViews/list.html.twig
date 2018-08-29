@@ -3,9 +3,9 @@
 {% block body %}
 <div class="bodyListContent">
 	<header>
-		<h2 style="margin-left: 15px;">Nendoroids : </h2>
+		<h2 style="margin-left: 15px;">Nendoroids</h2>
 		<div class="rangeContent">
-			<p class="rangeSet"> 801 - 900<i class="fas fa-caret-down"></i></p>
+			<p class="rangeSet rangeSetInactive"> 801 - 900<i class="fas fa-caret-down"></i></p>
 			<div id="001-100" class="rangeButton button hvr-shrink"></i>001 - 100</div>
 			<div id="101-200" class="rangeButton button hvr-shrink"></i>101 - 200</div>
 			<div id="201-300" class="rangeButton button hvr-shrink"></i>201 - 300</div>
@@ -19,11 +19,12 @@
 		<input type="text" name="searchBarNendoroids" placeholder="search" />
 		<div class="menuButton actionButton hvr-shrink menuInactive" ><i class="hvr-shrink fas fa-list-ul"></i><p>Menu</p></div>
 	</header>
+
 		<nav class="subNav">
-			<div class="myProfilButton actionButton hvr-shrink" ><a href="{{ path('otaku_project_user', {username : app.user.username }) }}"><i class="hvr-shrink fas fa-user"></i><p>My profil</p></a></div>
-			<div class="showUsersButton actionButton hvr-shrink" ><i class="hvr-shrink fas fa-users"></i><p>Show users</p></div>
-			<div class="showNendoroidsButton actionButton hvr-shrink" ><i class="hvr-shrink fas fa-list-ul"></i><p>Show nendoroids</p></div>
-			<div class="logoutButton actionButton hvr-shrink" ><a href="{{ path('fos_user_security_logout') }}"><i class="hvr-shrink fas fa-power-off"></i><p>Log out</p></a></div>
+			<div class="myProfilButton" ><a href="{{ path('otaku_project_user', {username : app.user.username }) }}"><i class=" fas fa-user"></i><p>My profil</p></a></div>
+			<div class="showUsersButton" ><i class=" fas fa-users"></i><p>Show users</p></div>
+			<div class="showNendoroidsButton" ><i class=" fas fa-list-ul"></i><p>Show nendoroids</p></div>
+			<div class="logoutButton" ><a href="{{ path('fos_user_security_logout') }}"><i class="hvr-shrink fas fa-power-off"></i><p>Log out</p></a></div>
 		</nav>
 
 	<div class="showListButton"><i class="far fa-times-circle hvr-shrink"></i></div>
@@ -58,6 +59,8 @@
 			var subNav = $(".subNav");
 			var subNavH = $(".subNav").height();
 
+			$("header h2").animate({left:0},500);
+
 			profilButton.on("click", function(){
 				loadScreen.fadeIn();
 			});
@@ -65,13 +68,13 @@
 			$(".menuButton").on("click", function(){
 				if($(this).hasClass("menuActive"))
 				{
-					subNav.animate({"top":0},500);
+					subNav.animate({"top":"-200px", opacity:0},500);
 					$(this).removeClass("menuActive");
 					$(this).addClass("menuInactive");
 				}
 				else
 				{
-					subNav.animate({"top":subNavH+5},500);
+					subNav.animate({"top":headerH, opacity:1},500);
 					$(this).addClass("menuActive");
 					$(this).removeClass("menuInactive");	
 				}
@@ -79,24 +82,45 @@
 
 			$(".showUsersButton").on("click", function(){
 				generateAllUsers();
+				subNav.animate({"top":"-200px", opacity:0},500)
+				$(".menuButton").removeClass("menuActive");
 			});
 
 			$(".showNendoroidsButton").on("click", function(){
 				generateAllNendo();
+				subNav.animate({"top":"-200px", opacity:0},500)
+				$(".menuButton").removeClass("menuActive");
+			});
+
+			$(".logoutButton").on("click", function(){
+				subNav.animate({"top":"-200px", opacity:0},500)
+				$(".menuButton").removeClass("menuActive");
 			});
 
 			subNav.css("height", subNavH);
 
 			$(".rangeSet").on("click",function(){
-				$("#001-100").animate({top: rangeButtonH*2,opacity:1},500,);
-				$("#101-200").animate({top: rangeButtonH*3,opacity:1},500,);
-				$("#201-300").animate({top: rangeButtonH*4,opacity:1},500,);
-				$("#301-400").animate({top: rangeButtonH*5,opacity:1},500,);
-				$("#401-500").animate({top: rangeButtonH*6,opacity:1},500,);
-				$("#501-600").animate({top: rangeButtonH*7,opacity:1},500,);
-				$("#601-700").animate({top: rangeButtonH*8,opacity:1},500,);
-				$("#701-800").animate({top: rangeButtonH*9,opacity:1},500,);
-				$("#801-900").animate({top: rangeButtonH*10,opacity:1},500,);
+				if($(this).hasClass("rangeSetInactive"))
+				{
+					$(this).removeClass("rangeSetInactive");
+					$(this).addClass("rangeSetActive");
+					$("#001-100").animate({top: rangeButtonH*2,opacity:1},500,);
+					$("#101-200").animate({top: rangeButtonH*3+10,opacity:1},500,);
+					$("#201-300").animate({top: rangeButtonH*4+20,opacity:1},500,);
+					$("#301-400").animate({top: rangeButtonH*5+30,opacity:1},500,);
+					$("#401-500").animate({top: rangeButtonH*6+40,opacity:1},500,);
+					$("#501-600").animate({top: rangeButtonH*7+50,opacity:1},500,);
+					$("#601-700").animate({top: rangeButtonH*8+60,opacity:1},500,);
+					$("#701-800").animate({top: rangeButtonH*9+70,opacity:1},500,);
+					$("#801-900").animate({top: rangeButtonH*10+80,opacity:1},500,);
+
+				}
+				else
+				{
+					$(this).removeClass("rangeSetActive");
+					$(this).addClass("rangeSetInactive");
+					$(".rangeButton").animate({top: "-50px",opacity:0},500,);
+				}
 			});
 
 			$(".rangeButton").on("click", function(){
@@ -110,7 +134,7 @@
 
 			$(".showListButton").on("click", function(){
 				$(".rightColumn").animate({bottom:0}, 500);
-				$(".subNav").animate({top:0},500);
+				$(".subNav").animate({top:"-200px"},500);
 				header.animate({top:0},500);
 				$(this).fadeOut();
 			});
@@ -192,33 +216,75 @@
 				}).appendTo(".cardNendoInnerBorder"+nendoroid['id']);
 
 				$("<i/>", {
-					"class": "far fa-heart cardNendoLikeButton"+nendoroid['id']+" hvr-shrink",
+					"class": "far fa-heart notLiked cardNendoLikeButton"+nendoroid['id']+" hvr-shrink",
 					click: function(){
- 						$(this).addClass("hvr-push");
- 						$.ajax({
- 							url: "{{ path('nendoroid_ajax') }}",
- 							method: "post",
- 							data: {idNendo : nendoroid['id'], action : "addLike"}
- 						})
- 						.done(function(data){
- 							$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas');
 
- 							var response = data['message'];
- 							blockResponse.css("background-color", "lightgreen");
- 							blockResponse.text(response[0]['message']);
- 							blockResponse.addClass("responseActive");
- 							setTimeout(function () {
- 								$('.response').removeClass("responseActive");
- 							}, 1500);
- 						})
- 						.fail(function(){
- 							blockResponse.text("Something went wrong");
- 							blockResponse.css("background-color", "red");
- 							blockResponse.addClass("responseActive");
- 							setTimeout(function () {
- 								blockResponse.removeClass("responseActive");
- 							}, 1500);
- 						});
+ 						$(this).addClass("hvr-push");
+
+ 						if($(this).hasClass("notLiked"))
+ 						{
+ 							$(this).removeClass("notLiked");
+ 							$(this).addClass("liked");
+ 							$(this).removeClass("far");
+ 							$(this).addClass("fas");
+
+	 						$.ajax({
+	 							url: "{{ path('nendoroid_ajax') }}",
+	 							method: "post",
+	 							data: {idNendo : nendoroid['id'], action : "addLike"}
+	 						})
+	 						.done(function(data){
+	 							$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas');
+
+	 							var response = data['message'];
+	 							blockResponse.css("background-color", "lightgreen");
+	 							blockResponse.text(response[0]['message']);
+	 							blockResponse.addClass("responseActive");
+	 							setTimeout(function () {
+	 								$('.response').removeClass("responseActive");
+	 							}, 1500);
+	 						})
+	 						.fail(function(){
+	 							blockResponse.text("Something went wrong");
+	 							blockResponse.css("background-color", "red");
+	 							blockResponse.addClass("responseActive");
+	 							setTimeout(function () {
+	 								blockResponse.removeClass("responseActive");
+	 							}, 1500);
+	 						});
+ 						}
+ 						else 
+ 						{
+ 							$(this).addClass("notLiked");
+ 							$(this).addClass("far");
+ 							$(this).removeClass("liked");
+ 							$(this).removeClass("fas");
+ 							$.ajax({
+	 							url: "{{ path('nendoroid_ajax') }}",
+	 							method: "post",
+	 							data: {idNendo : nendoroid['id'], action : "removeLike"}
+	 						})
+	 						.done(function(data){
+	 							$(".cardNendoLikeButton"+nendoroid['id']).addClass('far');
+
+	 							var response = data['message'];
+	 							blockResponse.css("background-color", "lightgreen");
+	 							blockResponse.text(response[0]['message']);
+	 							blockResponse.addClass("responseActive");
+	 							setTimeout(function () {
+	 								$('.response').removeClass("responseActive");
+	 							}, 1500);
+	 						})
+	 						.fail(function(){
+	 							blockResponse.text("Something went wrong");
+	 							blockResponse.css("background-color", "red");
+	 							blockResponse.addClass("responseActive");
+	 							setTimeout(function () {
+	 								blockResponse.removeClass("responseActive");
+	 							}, 1500);
+	 						});
+ 						}
+
  					}
 				}).appendTo(".cardNendoLikeButtonBox"+nendoroid['id']);
 
@@ -241,7 +307,7 @@
 						$(".leftColumn").html("");
 						$(".rightColumn").animate({bottom : -listH},500);
 						$("header").animate({top : -headerH},500);
-						$(".subNav").animate({top: -headerH},500);
+						$(".subNav").animate({top: "-200px"},500);
 						$(".showListButton").fadeIn();
 
 						$("<div/>", {
@@ -321,6 +387,7 @@
 				generateNendoroidCard(nendoroids);
 				getAllLists();
 				$('.loadScreen').fadeOut(1000);
+				// $("header h2").delay(1500).animate({left:0},1500);
 			});
 		}
 
@@ -346,6 +413,9 @@
 				console.log(allLists);
 				$.each(allLists, function(n, nendoroid){
 					$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas');
+					$(".cardNendoLikeButton"+nendoroid['id']).addClass('liked');
+					$(".cardNendoLikeButton"+nendoroid['id']).removeClass('far');
+					$(".cardNendoLikeButton"+nendoroid['id']).removeClass('notLiked');
 				});
 			});
 		}

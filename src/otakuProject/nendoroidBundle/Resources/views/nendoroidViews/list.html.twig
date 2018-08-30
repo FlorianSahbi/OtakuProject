@@ -2,7 +2,7 @@
 {% block title %}{{ parent() }} - List{% endblock %}
 {% block body %}
 	<header>
-		<h2>Nendoroids</h2>
+		<h2 class="titleHeader">Nendoroids</h2>
 
 		<div class="rangeContent">
 			<p class="rangeSet rangeSetInactive">
@@ -76,6 +76,7 @@
 			var menuButton = $(".menuButton");
 			var rangeSetH = rangeSet.height();
 			var rangeButton = $(".rangeButton");
+			var titleHeader = $(".titleHeader");
 			var logoutButton = $(".logoutButton");
 			var profilButton = $(".myProfilButton");
 			var showListButton = $(".showListButton");
@@ -84,7 +85,12 @@
 			var menuCloseButton = $(".menuCloseButton");
 			var showNendoroidsButton = $(".showNendoroidsButton");
 
-			rangeSet.on("click",function(){
+			titleHeader.on("click", function(){
+				getNendoroids('801-900');
+				displayCurrentRange("801 - 900");
+			});
+
+			rangeSet.on("click", function(){
 				if($(this).hasClass("rangeSetInactive")){
 					toogleSubNav("hide");
 					toggleRangeButtons("show");
@@ -96,8 +102,7 @@
 
 			rangeButton.on("click", function(){
 				var currentRange = $(this).attr("id");
-				$(".rangeSet span").remove();
-				rangeSet.append("<span>"+ currentRange +"</span>");
+				displayCurrentRange(currentRange);
 				toggleRangeButtons("hide");
 				getNendoroids(currentRange);
 			});
@@ -120,13 +125,13 @@
 			showUsersButton.on("click", function(){
 				toogleSubNav("hide");
 				getUsers();
+				displayCurrentRange("N/A");
 			});
 			
 			showNendoroidsButton.on("click", function(){
-				rangeSetSpan.remove();
-				rangeSet.append("<span>801 - 900</span>");
+				displayCurrentRange("801 - 900");
 				toogleSubNav("hide");
-				getNendoroids('801-900');
+				getNendoroids("801-900");
 			});
 
 			logoutButton.on("click", function(){
@@ -148,14 +153,22 @@
 					})
 					.done(function(nendoroidsArray){
 						generateNendoroidCards(nendoroidsArray);
+						getListsUser();
+						displayCurrentRange("search bar");
 					});
 				} 
 				else 
 				{
 					getNendoroids('801-900');
+					displayCurrentRange("801 - 900");
 				}
 			});		
 		});
+
+		function displayCurrentRange(range){
+			$(".rangeSet span").remove();
+			$(".rangeSet").append("<span>"+ range +"</span>");
+		}
 
 		function toogleSubNav(state){	
 			var subNav = $(".subNav");
@@ -411,7 +424,8 @@
 		function getListsUser(){
 			$.ajax({
 				url: "{{ path('get_user_lists') }}",
-				method: "post"
+				method: "post",
+				data: {usernameTargetLists : "{{ app.user.username }}" }
 			})
 			.done(function(data){
 				var allLists = data['nendoroids'];

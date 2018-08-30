@@ -19,6 +19,13 @@ header {
 header h2 {
     font-family: 'AudioWide';
     font-size: 2em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 1px black;
+}
+
+header h2:hover {
+    text-shadow: 0 0 2px beige;
 }
 
 .rangeContent {
@@ -82,7 +89,7 @@ header input[type="text"] {
     padding: 0px 10px;
     font-size: 1.1em;
     font-family: 'Orbitron';
-    border-radius: 10px;
+    border-radius: 15px 5px;
     background-color: unset;
 }
 
@@ -223,6 +230,7 @@ header input[type="text"] {
 
 .cardNendo {
     width: 160px;
+    max-width: 250px;
     height: 240px;
     flex: auto;
     margin: 10px;
@@ -294,9 +302,10 @@ header input[type="text"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30% 0;
+    margin: 30px 0;
     opacity: 0;
     transition: all 0.5s ease;
+    text-align: center;
 }
 
 .displayCardInformations {

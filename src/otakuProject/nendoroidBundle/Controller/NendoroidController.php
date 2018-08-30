@@ -39,13 +39,9 @@ class NendoroidController extends Controller
     {
       $currentUser = "false";
     }
-
-    $loveList       = $userToSee[0]->getNendoroidsLove();
-    $collectionList = $userToSee[0]->getNendoroidsCollection();
-    $likeList       = $userToSee[0]->getNendoroidsLike();
     
     return $this->render('otakuProjectnendoroidBundle:nendoroidViews:userInfo.html.twig', 
-    ['likeList' => $likeList, 'loveList' => $loveList, 'collectionList' => $collectionList, 'currentUser' => $currentUser, 'usernamesProfil' => $userToSee[0]]);
+    ['currentUser' => $currentUser, 'usernamesProfil' => $userToSee[0]]);
   }
 
   // get data
@@ -89,47 +85,53 @@ class NendoroidController extends Controller
     return new JsonResponse(['users' => $arrayUsers]);    
   }
 
-  public function getUserListsAction()
+  public function getUserListsAction(Request $request)
   {
-    $loggedInUser = $this->getUser();
+    $usernameTargetLists = $request->request->get('usernameTargetLists');
 
-    $loveList       = $loggedInUser->getNendoroidsLove();
-    $collectionList = $loggedInUser->getNendoroidsCollection();
-    $likeList       = $loggedInUser->getNendoroidsLike();
+    $em = $this->getDoctrine()->getManager();
+    $repositoryUsers = $em->getRepository('otakuProjectUserBundle:User');
+    $user = $repositoryUsers->findByUsername($usernameTargetLists);
+
+    // $loggedInUser = $this->getUser();
+
+    $loveList       = $user[0]->getNendoroidsLove();
+    $collectionList = $user[0]->getNendoroidsCollection();
+    $likeList       = $user[0]->getNendoroidsLike();
 
     if($loveList->isEmpty())
     {
-      $loveListArray[] = ['loveList' => null, 'notice' => 'The love list is empty.'];
+      $loveListArray[] = ['list' => 'none', 'notice' => 'The love list is empty.'];
     }
     else 
     {
       foreach ($loveList as $nendoroid) 
       {
-        $loveListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
+        $loveListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
       }
     } 
 
     if ($collectionList->isEmpty())
     {
-      $collectionListArray[] = ['collectionList' => null, 'notice' => 'The collection list is empty.'];
+      $collectionListArray[] = ['list' => 'none', 'notice' => 'The collection list is empty.'];
     }
     else
     {
       foreach ($collectionList as $nendoroid) 
       {
-        $collectionListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
+        $collectionListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
       }
     }
 
     if($likeList->isEmpty())
     {
-      $likeListArray[] = ['likeList' => null, 'notice' => 'The like list is empty.'];
+      $likeListArray[] = ['list' => 'none', 'notice' => 'The like list is empty.'];
     }
     else
     {
       foreach ($likeList as $nendoroid) 
       {
-        $likeListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
+        $likeListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
       }
     }
 
@@ -148,7 +150,7 @@ class NendoroidController extends Controller
 
     foreach ($nendoroids as $nendoroid) 
     {
-      $arrayNendo[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber()];
+      $arrayNendo[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber()];
     }
     return new JsonResponse(['nendoroids' => $arrayNendo]);    
   }

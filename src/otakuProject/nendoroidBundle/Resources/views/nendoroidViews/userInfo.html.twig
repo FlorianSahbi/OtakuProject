@@ -1,232 +1,164 @@
 {% extends "otakuProjectnendoroidBundle::layout.html.twig" %}
 {% block title %}{{ parent() }} - {{usernamesProfil}}{% endblock %}
 {% block body %}
+<span id="currentUser" style="display: none;">{{currentUser}}</span>
+	<nav id="userListNav" class="userListNavClose">
+		<i class="fas fa-bars navListButton hvr-shrink"></i>
+		<div class="getListButton menuUserButton hvr-shrink">
+			<a href="{{ path('nendoroids_list') }}">
+				<i class="hvr-shrink fas fa-list-ul"></i>
+				<p>Show list</p>
+			</a>
+		</div>
 	
-	<nav class="getList">
-		<a href="{{ path('nendoroids_list') }}">
-			<i class="hvr-shrink fas fa-list-ul"></i>
-		</a>
-	</nav>
+		<div class="showProfilButton menuUserButton hvr-shrink">
+			<a href="{{ path('user_profil', {username : app.user.username }) }}">
+				<i class="hvr-shrink fas fa-user"></i>
+				<p>Show my profil</p>
+			</a>
+		</div>
 
-	<div class="loginlogout">
-		<a href="{{ path('fos_user_security_logout') }}">
-			<i class="hvr-shrink fa-3x fas fa-power-off"></i>
-		</a>
-	</div>
-	
-	<div class="myProfil">
-		<a href="{{ path('user_profil', {username : app.user.username }) }}">
-			<i class="hvr-shrink fas fa-user"></i>
-		</a>
-	</div>
+		<div class="logoutButton menuUserButton hvr-shrink">
+			<a href="{{ path('fos_user_security_logout') }}">
+				<i class="hvr-shrink fas fa-power-off"></i>
+				<p>Log out</p>	
+			</a>
+		</div>
+	</nav>	
 
-	<section class="userInfo">
-		<div class="content">
-			<h1>{{usernamesProfil}}'s Profil</h1>
-			
-			<span id="currentUser" style="display: none;">{{currentUser}}</span>
+	<section id="userList">
+		<div class="userListContent">
+			<h1>{{usernamesProfil}}'s Collection</h1>
+			<div class="list">
 
-			<h2 class="titleLove">
-				<span class="firstLetter">L</span>ove
-				<span class="hvr-grow extend extendLove">
-					<i class="fas fa-expand-arrows-alt"></i>		
-				</span>
-			</h2>
-
-			<div class="listLove">
-				{% for nendoroid in loveList %}
-					<div class="cardLove{{nendoroid.id}} card"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
-						<span id="{{nendoroid.id}}" class="remove removeLoveButton hvr-shrink">❌</span>
-					</div>
-				{% endfor %}
-			</div>
-
-			<h2 class="titleCollection">
-				<span class="firstLetter">C</span>ollection
-				<span class="hvr-grow extend extendCollection">
-					<i class="fas fa-expand-arrows-alt"></i>		
-				</span>
-			</h2>
-
-			<div class="listCollection">
-				{% for nendoroid in collectionList %}
-					<div class="cardCollection{{nendoroid.id}} card"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
-						<span id="{{nendoroid.id}}" class="remove removeCollectionButton hvr-shrink">❌</span>
-					</div>
-				{% endfor %}
-			</div>
-			
-			<h2 class="titlelike">
-				<span class="firstLetter">L</span>ikes
-				<span class="hvr-grow extend extendLike">
-					<i class="fas fa-expand-arrows-alt"></i>
-				</span>
-			</h2>
-
-			<div class="listLike">
-				{% for nendoroid in likeList %}
-					<div class="cardLike{{nendoroid.id}} card" style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
-						<span id="{{nendoroid.id}}" class="remove removeLikeButton hvr-shrink">❌</span>
-					</div>
-				{% endfor %}
 			</div>
 		</div>
 	</section>
+
 	<script type="text/javascript">
 		$(document).ready(function(){
-			var loadScreen = $('.loadScreen');
-			var listButton = $(".getList");
-			var removeLoveButton = $(".removeLoveButton");
-			var removeLikeButton = $(".removeLikeButton");
-			var removeCollectionButton = $(".removeCollectionButton");
-
+			var loadScreen = $(".loadScreen");
+			var menuUserButton = $(".menuUserButton");
 
 			loadScreen.delay(1500).fadeOut(1000);
-		
-			listButton.on("click", function(){
+
+			menuUserButton.on("click", function(){
 				loadScreen.fadeIn();
 			});
 
-			removeLoveButton.on("click",function(){
-				var idNendo = $(this).attr('id');
-				$.ajax({
-					url: "{{ path('nendoroid_ajax') }}",
-					method: "post",
-					data: {idNendo : idNendo, action : "removeLove"}
-				})
-				.done(function(){
-					$(".cardLove"+idNendo).remove();
-				});
-			});
-
-			removeCollectionButton.on("click",function(){
-				var idNendo = $(this).attr('id');
-				$.ajax({
-					url: "{{ path('nendoroid_ajax') }}",
-					method: "post",
-					data: {idNendo : idNendo, action : "removeCollection"}
-				})
-				.done(function(){
-					$(".cardCollection"+idNendo).remove();
-				});
-			});
-
-			removeLikeButton.on("click",function(){
-				var idNendo = $(this).attr('id');
-				$(".cardLike"+idNendo).remove();
-				$.ajax({
-					url: "{{ path('nendoroid_ajax') }}",
-					method: "post",
-					data: {idNendo : idNendo, action : "removeLike"}
-				})
-				.done(function(){
-					// $(".cardLike"+idNendo).remove();
-				});
-			});
-
-			$(".extend").on("click",function(){
-				var card = $(".card");
-
-				if ($(this).hasClass("listActive"))
-				{
-					$(this).removeClass("listActive");
-					
-					if ($(this).hasClass("extendLove")) 
-					{
-						$(".listCollection, .listLike").animate({height:"100%"}, 500);
-					} 
-					else if ($(this).hasClass("extendCollection")) 
-					{
-						$(".listLove, .listLike").animate({height:"100%"}, 500);
-					}
-					else if ($(this).hasClass("extendLike")) 
-					{
-						$(".listCollection, .listLove").animate({height:"100%"}, 500);
-					}
-					// card.css({"height" : "85%", "width" : "100px", "flex" : "none", "margin" : "5px"});
-					card.removeClass("bigcard");
+			$(".navListButton").on("click", function(){
+				if($("#userListNav").hasClass("userListNavClose")){
+					$("#userListNav").removeClass("userListNavClose");
+					$(this).removeClass("fa-bars").addClass("fa-times");
 				}
 				else
 				{
-					$(this).addClass("listActive");
-
-					if ($(this).hasClass("extendLove")) 
-					{
-						if ($(".extendCollection").hasClass("listActive")) 
-						{
-							$(".extendCollection").removeClass("listActive");
-							$(".listLove").animate({height:"100%"}, 500);
-							$(".listCollection, .listLike").animate({height:"0%"}, 500);
-						}
-						else if ($(".extendLike").hasClass("listActive")) 
-						{
-							$(".extendLike").removeClass("listActive");
-							$(".listLove").animate({height:"100%"}, 500);
-							$(".listCollection, .listLike").animate({height:"0%"}, 500);
-						}
-						else
-						{
-							$(".listLove").animate({height:"100%"}, 500);
-							$(".listCollection, .listLike").animate({height:"0%"}, 500);
-						}
-					}
-					else if ($(this).hasClass("extendCollection")) 
-					{
-						if ($(".extendLove").hasClass("listActive"))
-						{
-							$(".extendLove").removeClass("listActive");
-							$(".listCollection").animate({height:"100%"}, 500);
-							$(".listLove, .listLike").animate({height:"0%"}, 500);
-						}
-						else if ($(".extendLike").hasClass("listActive")) 
-						{
-							$(".extendLike").removeClass("listActive");
-							$(".listCollection").animate({height:"100%"}, 500);
-							$(".listLove, .listLike").animate({height:"0%"}, 500);
-						}
-						else 
-						{
-							$(".listCollection").animate({height:"100%"}, 500);
-							$(".listLove, .listLike").animate({height:"0%"}, 500);
-						}
-					}
-					else if ($(this).hasClass("extendLike")) 
-					{
-						if ($(".extendLove").hasClass("listActive"))
-						{
-							$(".extendLove").removeClass("listActive");
-							$(".listLike").animate({height:"100%"}, 500);
-							$(".listCollection, .listLove").animate({height:"0%"}, 500);	
-						}
-						else if ($(".extendCollection").hasClass("listActive"))
-						{
-							$(".extendCollection").removeClass("listActive");
-							$(".listLike").animate({height:"100%"}, 500);
-							$(".listCollection, .listLove").animate({height:"0%"}, 500);	
-						} 
-						else
-						{
-							$(".listLike").animate({height:"100%"}, 500);
-							$(".listCollection, .listLove").animate({height:"0%"}, 500);	
-						}
-					}
-					// card.css({"height" : "60%", "width" : "180px", "flex" : "auto", "margin" : "5px"});
-					card.addClass("bigcard");
+					$("#userListNav").addClass("userListNavClose");
+					$(this).addClass("fa-bars").removeClass("fa-times");	
 				}
 			});
-
-			$(".remove").on("click", function(){
-				$(this).addClass("hvr-push");
-			});
-			
-			var currentUser = $("#currentUser").text();
-			if(currentUser == "true"){
-			}
-			else {
-				$(".remove").remove();
-				$(".myProfil").fadeIn();
-				$(".myProfil").css("display", "flex");
-			}
+			getListsUser();
 		});
+		
+		function hideLikeButtons(){
+				$("fa-heart").remove();
+		}
+
+		function getListsUser(){
+			$.ajax({
+				url: "{{ path('get_user_lists') }}",
+				method: "post",
+				data: {usernameTargetLists : "{{usernamesProfil}}" }
+			})
+			.done(function(nendoroidsArray){
+				generateNendoroidCards(nendoroidsArray);
+			});
+		}
+
+		function generateNendoroidCards(nendoroidsArray){
+			var currentUser = $("#currentUser").text();
+			var nendoroids = nendoroidsArray['nendoroids'];
+			console.log(nendoroids);
+			var nendoroidsList = $(".screenListNendoroids");
+			nendoroidsList.html('');
+
+			$.each(nendoroids, function(n, nendoroid){
+				if(nendoroid['list'] != "none")
+				{
+					$("<div/>", {
+
+						id: nendoroid['id'],
+						"class": "cardNendo "+ nendoroid['list'],
+						style: "background-image: url('/otakuProject/web/images/nendoroids/"+nendoroid['number']+".jpg');",
+
+						mouseover: function(){
+							$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).addClass("displayCardInformations");
+							$(".cardNendoMoreInformations"+nendoroid['id']).addClass("displayButtonMoreInformations");
+						},
+
+						mouseleave: function(){
+							$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).removeClass("displayCardInformations");
+							$(".cardNendoMoreInformations"+nendoroid['id']).removeClass("displayButtonMoreInformations");
+						}
+					}).appendTo(".list");
+
+					$("<div/>", {
+						"class": "cardNendoContent cardNendoContent"+nendoroid['id']
+					}).appendTo("#"+nendoroid['id']);
+
+					$("<div/>", {
+						"class": "cardNendoInnerBorder cardNendoInnerBorder"+nendoroid['id']
+					}).appendTo(".cardNendoContent"+nendoroid['id']);
+
+					$("<div/>", {
+						"class": "cardNendoLikeButtonBox cardNendoLikeButtonBox"+nendoroid['id']
+					}).appendTo(".cardNendoInnerBorder"+nendoroid['id']);
+
+					if(currentUser == "true"){
+						$("<i/>", {
+							"class": "fas fa-heart liked cardNendoLikeButton"+nendoroid['id']+" hvr-shrink",
+							click: function(){
+									$("#"+nendoroid['id']).remove();
+									nendoAction(nendoroid['id'], "removeLike");
+								}
+						}).appendTo(".cardNendoLikeButtonBox"+nendoroid['id']);
+					}
+
+					$("<div/>", {
+						"class": "cardNendoNumber cardNendoNumber"+nendoroid['id'],
+						text: "#"+nendoroid['number']
+					}).appendTo(".cardNendoInnerBorder"+nendoroid['id']);
+				
+					$("<div/>", {
+						"class": "cardNendoName cardNendoName"+nendoroid['id'],
+						text: nendoroid['name']
+					}).appendTo(".cardNendoInnerBorder"+nendoroid['id']);
+				}
+			});
+		}	
+
+		function nendoAction(nendoroid, action){
+			var blockResponse = $(".response");
+			$.ajax({
+				url: "{{ path('nendoroid_ajax') }}",
+				method: "post",
+				data: {idNendo : nendoroid, action : action}
+			})
+			.done(function(data){
+				var response = data['message'];
+				blockResponse.text(response[0]['message'])
+						 	 .addClass("responseActive responseOk");
+				setTimeout(function () {
+					blockResponse.removeClass("responseActive responseOk");
+				}, 1500);
+			})
+			.fail(function(){
+				blockResponse.text("Something went wrong")
+						  	 .addClass("responseActive responseFail");
+				setTimeout(function () {
+					blockResponse.removeClass("responseActive responseFail");
+				}, 1500);
+			});
+		}
 	</script>
 {% endblock %}

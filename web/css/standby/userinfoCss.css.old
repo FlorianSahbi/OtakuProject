@@ -1,0 +1,166 @@
+.listLove, .listCollection, .listLike {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow: auto;
+    flex: auto;
+}
+
+.card {
+    height: 85%;
+    width: 100px;
+    flex: none;
+    margin: 5px;
+    background-size: cover;
+    border-radius: 5px;
+    position: relative;
+    max-width: 200px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.2s ease;
+}
+
+.bigcard {
+    height: 60% !important;
+    width: 180px !important;
+    flex: auto !important;
+    margin: 10px !important;
+    transition: all 0.2s ease;
+}
+
+.card:after {
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 90%;
+    border-radius: inherit;
+    border: 3px double beige;
+}
+
+.remove {
+	content: '❌';
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	z-index: 9;
+	cursor: pointer;
+}
+
+h1 {
+	font-family: Orbitron;
+	color: beige;
+}
+
+.userInfo {
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(../images/otakuProjectBg.jpg);
+}
+
+.userInfo .content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.listLove{}
+
+.listCollection {}
+
+.listLike {}
+
+.content h1 {
+    font-size: 2em;
+    font-family: 'audiowide';
+}
+
+.extendLove, .extendLike, .extendCollection {
+	font-size: 1em;
+	transform: rotate(12deg);
+	color: rgba(0,0,0,0.5);
+	cursor: pointer;
+}
+
+.extend .fas {
+    color: beige;
+    opacity: 0.5;
+    font-size: 0.6em;
+}
+		
+.content .firstLetter {
+	color: pink;
+	font-size: 2em;
+}
+
+.loginlogout, .getList, .myProfil {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    margin: 20px;
+    border: solid beige 3px;
+}
+
+.loginlogout {
+	right: 0;
+    top: 0;
+}
+
+.getList {
+	left: 0;
+    top: 0;
+}
+
+.myProfil {
+    left: 70px;
+    top: 0;
+    display: none;
+}
+
+
+.loginlogout i, .getList i, .myProfil i {
+	color: black;
+    opacity: 0.5;
+    transition: all 0.2s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.getList i, .myProfil i {
+	font-size: 1.7em;
+}
+
+.loginlogout i {
+	font-size: 2em;
+}
+
+.loginlogout i:hover, .getList i:hover, .myProfil i:hover {
+	opacity: 1;
+}
+
+@media screen and (max-width:900px) {
+
+	.bigcard {
+ 		height: 60% !important;
+    	width: 90px !important;
+	} 
+}

@@ -1,142 +1,141 @@
 {% extends "otakuProjectnendoroidBundle::layout.html.twig" %}
 {% block title %}{{ parent() }} - List{% endblock %}
 {% block body %}
-<div class="bodyListContent">
 	<header>
-		<h2 style="margin-left: 15px;">Nendoroids</h2>
+		<h2>Nendoroids</h2>
+
 		<div class="rangeContent">
-			<p class="rangeSet rangeSetInactive"> 801 - 900<i class="fas fa-caret-down"></i></p>
-			<div id="001-100" class="rangeButton button hvr-shrink"></i>001 - 100</div>
-			<div id="101-200" class="rangeButton button hvr-shrink"></i>101 - 200</div>
-			<div id="201-300" class="rangeButton button hvr-shrink"></i>201 - 300</div>
-			<div id="301-400" class="rangeButton button hvr-shrink"></i>301 - 400</div>
-			<div id="401-500" class="rangeButton button hvr-shrink"></i>401 - 500</div>
-			<div id="501-600" class="rangeButton button hvr-shrink"></i>501 - 600</div>
-			<div id="601-700" class="rangeButton button hvr-shrink"></i>601 - 700</div>
-			<div id="701-800" class="rangeButton button hvr-shrink"></i>701 - 800</div>
-			<div id="801-900" class="rangeButton button hvr-shrink"></i>801 - 900</div>
+			<p class="rangeSet rangeSetInactive">
+				<i class="fas fa-caret-down"></i>
+				<span>801 - 900</span>
+			</p>
+			<div id="001-100" class="rangeButton button hvr-shrink">001 - 100</div>
+			<div id="101-200" class="rangeButton button hvr-shrink">101 - 200</div>
+			<div id="201-300" class="rangeButton button hvr-shrink">201 - 300</div>
+			<div id="301-400" class="rangeButton button hvr-shrink">301 - 400</div>
+			<div id="401-500" class="rangeButton button hvr-shrink">401 - 500</div>
+			<div id="501-600" class="rangeButton button hvr-shrink">501 - 600</div>
+			<div id="601-700" class="rangeButton button hvr-shrink">601 - 700</div>
+			<div id="701-800" class="rangeButton button hvr-shrink">701 - 800</div>
+			<div id="801-900" class="rangeButton button hvr-shrink">801 - 900</div>
 		</div>
+
 		<input type="text" name="searchBarNendoroids" placeholder="search" />
-		<div class="menuButton actionButton hvr-shrink menuInactive" ><i class="hvr-shrink fas fa-list-ul"></i><p>Menu</p></div>
+		
+		<div class="menuButton actionButton hvr-shrink menuInactive">
+			<i class="hvr-shrink fas fa-list-ul"></i>
+			<p>Menu</p>
+		</div>
 	</header>
 
-		<nav class="subNav">
-			<div class="myProfilButton" ><a href="{{ path('otaku_project_user', {username : app.user.username }) }}"><i class=" fas fa-user"></i><p>My profil</p></a></div>
-			<div class="showUsersButton" ><i class=" fas fa-users"></i><p>Show users</p></div>
-			<div class="showNendoroidsButton" ><i class=" fas fa-list-ul"></i><p>Show nendoroids</p></div>
-			<div class="logoutButton" ><a href="{{ path('fos_user_security_logout') }}"><i class="hvr-shrink fas fa-power-off"></i><p>Log out</p></a></div>
-		</nav>
+	<nav class="subNav">
+		<div class="myProfilButton subMenuButton">
+			<a href="{{ path('user_profil', {username : app.user.username }) }}">
+				<i class="fas fa-user"></i>
+				<p>My profil</p>
+			</a>
+		</div>
+		
+		<div class="showUsersButton subMenuButton">
+			<i class="fas fa-users"></i>
+			<p>Show users</p>
+		</div>
 
-	<div class="showListButton"><i class="far fa-times-circle hvr-shrink"></i></div>
+		<div class="showNendoroidsButton subMenuButton">
+			<i class="fas fa-list-ul"></i>
+			<p>Show nendoroids</p>
+		</div>
 
-	<!-- Frame -->
+		<div class="logoutButton subMenuButton">
+			<a href="{{ path('fos_user_security_logout') }}">
+				<i class="hvr-shrink fas fa-power-off"></i>
+				<p>Log out</p>
+			</a>
+		</div>
+	</nav>
+
+	<div class="showListButton">
+		<i class="far fa-times-circle hvr-shrink"></i>
+	</div>
+
 	<section id="nendoroidsList">
 		<div class="content">
-			<div class="leftColumn"></div>
-			<div class="rightColumn"></div>
+			<div class="screenInformationsNendoroids"></div>
+			<div class="screenListNendoroids"></div>
 		</div>
 		<div class="response"></div>
 	</section>
-	<!-- Frame End -->
-</div>
 
 	<script>
 		$(document).ready( function(){
 
-			generateAllNendo();
+			getNendoroids('801-900');
 
-			var menuCloseButton = $(".menuCloseButton");
-			var menuOpenButton = $(".menuOpenButton");
-			var profilButton = $(".getProfil");
-			var loadScreen = $('.loadScreen');
+			var input = $("input");
+			var rangeSet = $(".rangeSet");
+			var menuButton = $(".menuButton");
+			var rangeSetH = rangeSet.height();
 			var rangeButton = $(".rangeButton");
-			var rightColumn = $(".rightColumn");
-			var leftColumn = $(".leftColumn");
-			var blockResponse = $(".response");
-			var header = $("header");
-			var headerH = $("header").height();
-			var rangeButtonH = rangeButton.height();
-			var subNav = $(".subNav");
-			var subNavH = $(".subNav").height();
+			var logoutButton = $(".logoutButton");
+			var profilButton = $(".myProfilButton");
+			var showListButton = $(".showListButton");
+			var menuOpenButton = $(".menuOpenButton");
+			var showUsersButton = $(".showUsersButton");
+			var menuCloseButton = $(".menuCloseButton");
+			var showNendoroidsButton = $(".showNendoroidsButton");
 
-			$("header h2").animate({left:0},500);
+			rangeSet.on("click",function(){
+				if($(this).hasClass("rangeSetInactive")){
+					toogleSubNav("hide");
+					toggleRangeButtons("show");
+				}
+				else {
+					toggleRangeButtons("hide");
+				}
+			});
+
+			rangeButton.on("click", function(){
+				var currentRange = $(this).attr("id");
+				$(".rangeSet span").remove();
+				rangeSet.append("<span>"+ currentRange +"</span>");
+				toggleRangeButtons("hide");
+				getNendoroids(currentRange);
+			});
+
+			menuButton.on("click", function(){
+				if($(this).hasClass("menuActive")){
+					toogleSubNav("hide");
+				}
+				else {
+					toogleSubNav("show");
+					toggleRangeButtons("hide");
+				}
+			});
 
 			profilButton.on("click", function(){
-				loadScreen.fadeIn();
+				toogleSubNav("hide");
+				toogleLoadScreen("show");
 			});
 
-			$(".menuButton").on("click", function(){
-				if($(this).hasClass("menuActive"))
-				{
-					subNav.animate({"top":"-200px", opacity:0},500);
-					$(this).removeClass("menuActive");
-					$(this).addClass("menuInactive");
-				}
-				else
-				{
-					subNav.animate({"top":headerH, opacity:1},500);
-					$(this).addClass("menuActive");
-					$(this).removeClass("menuInactive");	
-				}
+			showUsersButton.on("click", function(){
+				toogleSubNav("hide");
+				getUsers();
+			});
+			
+			showNendoroidsButton.on("click", function(){
+				rangeSetSpan.remove();
+				rangeSet.append("<span>801 - 900</span>");
+				toogleSubNav("hide");
+				getNendoroids('801-900');
 			});
 
-			$(".showUsersButton").on("click", function(){
-				generateAllUsers();
-				subNav.animate({"top":"-200px", opacity:0},500)
-				$(".menuButton").removeClass("menuActive");
-			});
+			logoutButton.on("click", function(){
+				toogleSubNav("hide");
+				toogleLoadScreen("show");	
+			});	
 
-			$(".showNendoroidsButton").on("click", function(){
-				generateAllNendo();
-				subNav.animate({"top":"-200px", opacity:0},500)
-				$(".menuButton").removeClass("menuActive");
-			});
-
-			$(".logoutButton").on("click", function(){
-				subNav.animate({"top":"-200px", opacity:0},500)
-				$(".menuButton").removeClass("menuActive");
-			});
-
-			subNav.css("height", subNavH);
-
-			$(".rangeSet").on("click",function(){
-				if($(this).hasClass("rangeSetInactive"))
-				{
-					$(this).removeClass("rangeSetInactive");
-					$(this).addClass("rangeSetActive");
-					$("#001-100").animate({top: rangeButtonH*2,opacity:1},500,);
-					$("#101-200").animate({top: rangeButtonH*3+10,opacity:1},500,);
-					$("#201-300").animate({top: rangeButtonH*4+20,opacity:1},500,);
-					$("#301-400").animate({top: rangeButtonH*5+30,opacity:1},500,);
-					$("#401-500").animate({top: rangeButtonH*6+40,opacity:1},500,);
-					$("#501-600").animate({top: rangeButtonH*7+50,opacity:1},500,);
-					$("#601-700").animate({top: rangeButtonH*8+60,opacity:1},500,);
-					$("#701-800").animate({top: rangeButtonH*9+70,opacity:1},500,);
-					$("#801-900").animate({top: rangeButtonH*10+80,opacity:1},500,);
-
-				}
-				else
-				{
-					$(this).removeClass("rangeSetActive");
-					$(this).addClass("rangeSetInactive");
-					$(".rangeButton").animate({top: "-50px",opacity:0},500,);
-				}
-			});
-
-			$(".rangeButton").on("click", function(){
-				$(".rangeButton").removeClass("buttonActive");
-				$(this).addClass("buttonActive");
-				var mavar = $(this).text();
-				$(".rangeSet").text(mavar);
-				var mav2 = $(".rangeButton").height();
-				$(".rangeButton").animate({top:mav2*2, opacity:0},300);
-			});
-
-			$(".showListButton").on("click", function(){
-				$(".rightColumn").animate({bottom:0}, 500);
-				$(".subNav").animate({top:"-200px"},500);
-				header.animate({top:0},500);
-				$(this).fadeOut();
+			showListButton.on("click", function(){
+				toggleNendoroidsList("show");
 			});
 
 			$("input").keyup(function(){
@@ -147,61 +146,160 @@
 						method: "post",
 						data: {key : mot}
 					})
-					.done(function(data){
-						var nendoroids = data['nendoroids'];
-						generateNendoroidCard(nendoroids);
-						getAllLists()
-						$(".leftColumn").fadeIn();
+					.done(function(nendoroidsArray){
+						generateNendoroidCards(nendoroidsArray);
 					});
 				} 
 				else 
 				{
-					$(".leftColumn").fadeIn();
-					generateAllNendo();
-					getAllLists()
+					getNendoroids('801-900');
 				}
-			});
-
-			$(".rangeButton").on("click",function(){
-				$(".leftColumn").fadeIn();
-				var page = $(this).attr("id");
-				$.ajax({
-					url: "{{ path('generate_list_range_ajax') }}",
-					method: "post",
-					data: {range : page}
-				})
-				.done(function(data){
-					var nendoroids = data['nendoroids'];
-					generateNendoroidCard(nendoroids);
-					getAllLists()
-				});
-			});
+			});		
 		});
 
-		function generateNendoroidCard(nendoroids){
-			var rightColumn = $(".rightColumn");
-			var listH = rightColumn.height();
-			var leftColumn = $(".leftColumn");
+		function toogleSubNav(state){	
+			var subNav = $(".subNav");
+			var subNavH = $(".subNav").height();
+			var headerH = $("header").height();
+			var menuButton = $(".menuButton");
+
+			if (state == "hide"){
+				subNav.animate({top : "-200px" , opacity : 0}, 500);
+				menuButton.removeClass("menuActive").addClass("menuInactive");				
+			}
+			else if (state == "show"){
+				subNav.animate({top : headerH , opacity : 1}, 500);
+				menuButton.addClass("menuActive").removeClass("menuInactive");
+			}
+		}
+
+		function toogleLoadScreen(state){
+			var loadScreen = $('.loadScreen');
+
+			if (state == "show"){
+				loadScreen.fadeIn();
+			}
+			else if (state == "hide"){
+				loadScreen.fadeOut();
+			}
+		}
+
+		function toggleNendoroidsList(state){
+			var header = $("header");
+			var headerH = $("header").height();
+			var subNav = $(".subNav");
+			var list = $(".screenListNendoroids");
+			var listH = $(".screenListNendoroids").height();
+			var closeNendoroidPageButton = $(".showListButton");
+
+			if(state == "hide"){
+				list.animate({bottom : -listH},500);
+				header.animate({top : -headerH},500);
+				subNav.animate({top : "-200px"},500);
+				closeNendoroidPageButton.fadeIn();
+			}
+			else if (state == "show"){
+				list.animate({bottom:0, opacity:1}, 500);
+				subNav.animate({top:"-200px"},500);
+				header.animate({top:0},500);
+				closeNendoroidPageButton.fadeOut();
+			}
+		}
+
+		function toggleRangeButtons(state){
+			var rangeButton = $(".rangeButton");
+			var rangeButtonH = $(".rangeButton").height();
+			var rangeSet = $(".rangeSet");
+			
+			if(state == "show"){
+				rangeSet.removeClass("rangeSetInactive").addClass("rangeSetActive");
+				$("#001-100").animate({top : rangeButtonH * 2     , opacity : 1}, 500,);
+				$("#101-200").animate({top : rangeButtonH * 3+10  , opacity : 1}, 500);
+				$("#201-300").animate({top : rangeButtonH * 4+20  , opacity : 1}, 500);
+				$("#301-400").animate({top : rangeButtonH * 5+30  , opacity : 1}, 500);
+				$("#401-500").animate({top : rangeButtonH * 6+40  , opacity : 1}, 500);
+				$("#501-600").animate({top : rangeButtonH * 7+50  , opacity : 1}, 500);
+				$("#601-700").animate({top : rangeButtonH * 8+60  , opacity : 1}, 500);
+				$("#701-800").animate({top : rangeButtonH * 9+70  , opacity : 1}, 500);
+				$("#801-900").animate({top : rangeButtonH * 10+80 , opacity : 1} ,500);
+			}
+			else if(state == "hide"){
+				$(".rangeSet").removeClass("rangeSetActive").addClass("rangeSetInactive");
+				$(".rangeButton").animate({top: "-50px",opacity:0},500,);
+			}
+		}
+
+		function getNendoroids(rangeId){
+			$.ajax({
+				url: "{{ path('get_nendoroids') }}",
+				method: "post",
+				data: {rangeId : rangeId}
+			})
+			.done(function(nendoroidsArray){
+				generateNendoroidCards(nendoroidsArray);
+				getListsUser();
+				$('.loadScreen').fadeOut(1000);
+			});
+		}
+
+		function getUsers(users){
+			$.ajax({
+				url: "{{ path('get_users') }}",
+				method: "post"
+			})
+			.done(function(data){
+				var users = data['users'];
+				generateUser(users);
+			});
+		}
+
+		function nendoAction(nendoroid, action){
 			var blockResponse = $(".response");
-			var nendoroid = nendoroids;
-			console.log(nendoroids);
-			rightColumn.html('');
+			$.ajax({
+				url: "{{ path('nendoroid_ajax') }}",
+				method: "post",
+				data: {idNendo : nendoroid, action : action}
+			})
+			.done(function(data){
+				var response = data['message'];
+				blockResponse.text(response[0]['message'])
+							 .addClass("responseActive responseOk");
+				setTimeout(function () {
+					blockResponse.removeClass("responseActive responseOk");
+				}, 1500);
+			})
+			.fail(function(){
+				blockResponse.text("Something went wrong")
+							 .addClass("responseActive responseFail");
+				setTimeout(function () {
+					blockResponse.removeClass("responseActive responseFail");
+				}, 1500);
+			});
+		}
+
+		function generateNendoroidCards(nendoroidsArray){
+			var nendoroids = nendoroidsArray['nendoroids'];
+			// console.log(nendoroids);
+			var nendoroidsList = $(".screenListNendoroids");
+			nendoroidsList.html('');
 
 			$.each(nendoroids, function(n, nendoroid){
 				$("<div/>", {
+
 					id: nendoroid['id'],
 					"class": "cardNendo",
 					style: "background-image: url('/otakuProject/web/images/nendoroids/"+nendoroid['number']+".jpg');",
-					mouseover: function(){
-						$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).addClass("testeffect");
-						$(".cardNendoMoreInformations"+nendoroid['id']).addClass("testeffect2");
 
+					mouseover: function(){
+						$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).addClass("displayCardInformations");
+						$(".cardNendoMoreInformations"+nendoroid['id']).addClass("displayButtonMoreInformations");
 					},
+
 					mouseleave: function(){
-						$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).removeClass("testeffect");
-						$(".cardNendoMoreInformations"+nendoroid['id']).removeClass("testeffect2");
+						$(".cardNendoNumber"+nendoroid['id']+", .cardNendoName"+nendoroid['id']).removeClass("displayCardInformations");
+						$(".cardNendoMoreInformations"+nendoroid['id']).removeClass("displayButtonMoreInformations");
 					}
-				}).appendTo(".rightColumn");
+				}).appendTo(".screenListNendoroids");
 
 				$("<div/>", {
 					"class": "cardNendoContent cardNendoContent"+nendoroid['id']
@@ -218,73 +316,17 @@
 				$("<i/>", {
 					"class": "far fa-heart notLiked cardNendoLikeButton"+nendoroid['id']+" hvr-shrink",
 					click: function(){
-
+ 						// fas = full hearth : far = empty hearth
  						$(this).addClass("hvr-push");
 
- 						if($(this).hasClass("notLiked"))
- 						{
- 							$(this).removeClass("notLiked");
- 							$(this).addClass("liked");
- 							$(this).removeClass("far");
- 							$(this).addClass("fas");
-
-	 						$.ajax({
-	 							url: "{{ path('nendoroid_ajax') }}",
-	 							method: "post",
-	 							data: {idNendo : nendoroid['id'], action : "addLike"}
-	 						})
-	 						.done(function(data){
-	 							$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas');
-
-	 							var response = data['message'];
-	 							blockResponse.css("background-color", "lightgreen");
-	 							blockResponse.text(response[0]['message']);
-	 							blockResponse.addClass("responseActive");
-	 							setTimeout(function () {
-	 								$('.response').removeClass("responseActive");
-	 							}, 1500);
-	 						})
-	 						.fail(function(){
-	 							blockResponse.text("Something went wrong");
-	 							blockResponse.css("background-color", "red");
-	 							blockResponse.addClass("responseActive");
-	 							setTimeout(function () {
-	 								blockResponse.removeClass("responseActive");
-	 							}, 1500);
-	 						});
+ 						if($(this).hasClass("notLiked")){
+ 							$(this).removeClass("notLiked far").addClass("liked fas");
+	 						nendoAction(nendoroid['id'], "addLike");
  						}
- 						else 
- 						{
- 							$(this).addClass("notLiked");
- 							$(this).addClass("far");
- 							$(this).removeClass("liked");
- 							$(this).removeClass("fas");
- 							$.ajax({
-	 							url: "{{ path('nendoroid_ajax') }}",
-	 							method: "post",
-	 							data: {idNendo : nendoroid['id'], action : "removeLike"}
-	 						})
-	 						.done(function(data){
-	 							$(".cardNendoLikeButton"+nendoroid['id']).addClass('far');
-
-	 							var response = data['message'];
-	 							blockResponse.css("background-color", "lightgreen");
-	 							blockResponse.text(response[0]['message']);
-	 							blockResponse.addClass("responseActive");
-	 							setTimeout(function () {
-	 								$('.response').removeClass("responseActive");
-	 							}, 1500);
-	 						})
-	 						.fail(function(){
-	 							blockResponse.text("Something went wrong");
-	 							blockResponse.css("background-color", "red");
-	 							blockResponse.addClass("responseActive");
-	 							setTimeout(function () {
-	 								blockResponse.removeClass("responseActive");
-	 							}, 1500);
-	 						});
+ 						else{
+ 							$(this).addClass("notLiked far").removeClass("liked fas");
+ 							nendoAction(nendoroid['id'], "removeLike");
  						}
-
  					}
 				}).appendTo(".cardNendoLikeButtonBox"+nendoroid['id']);
 
@@ -302,59 +344,49 @@
 					"class": "cardNendoMoreInformations cardNendoMoreInformations"+nendoroid['id']+" hvr-shrink",
 					text: "info",
 					click: function(){
-						var headerH = $("header").height();
-
-						$(".leftColumn").html("");
-						$(".rightColumn").animate({bottom : -listH},500);
-						$("header").animate({top : -headerH},500);
-						$(".subNav").animate({top: "-200px"},500);
-						$(".showListButton").fadeIn();
-
-						$("<div/>", {
-							"class": "leftColumnContent"
-						}).appendTo(".leftColumn");
-
-						$("<div/>", {
-							"class": "informationsName",
-							text: nendoroid['name']
-						}).appendTo(".leftColumnContent");
-
-						$("<div/>", {
-							"class": "imgContent"
-						}).appendTo(".leftColumnContent");
-
-						$("<img/>", {
-							src: "/otakuProject/web/images/nendoroids/"+nendoroid['number']+".jpg"
-						}).appendTo(".imgContent");
-
-						$("<div/>", {
-							"class": "actionButtons"
-						}).appendTo(".leftColumnContent");
-
-						$("<div/>", {
-							"class": "addLikeButton"
-						}).appendTo(".actionButtons");
-
-						$("<div/>", {
-							"class": "addCollectionButton"
-						}).appendTo(".actionButtons");
-
-						$("<div/>", {
-							"class": "informationsNumber",
-							text: "#"+nendoroid['number']
-						}).appendTo(".leftColumnContent");
+						toogleSubNav("hide");
+						toggleRangeButtons("hide");
+						createNendroidInformationsPage(nendoroid);
+						toggleNendoroidsList("hide");
 					}
 				}).appendTo(".cardNendoInnerBorder"+nendoroid['id']);
 			});
 		}	
 
+		function createNendroidInformationsPage(nendoroid){
+			var nendoroidPage = $(".screenInformationsNendoroids");			
+			nendoroidPage.html("");
+			
+			$("<div/>", {
+				"class": "screenInformationsNendoroidsContent"
+			}).appendTo(".screenInformationsNendoroids");
+
+			$("<div/>", {
+				"class": "informationsName",
+				text: nendoroid['name']
+			}).appendTo(".screenInformationsNendoroidsContent");
+
+			$("<div/>", {
+				"class": "imgContent"
+			}).appendTo(".screenInformationsNendoroidsContent");
+
+			$("<img/>", {
+				src: "/otakuProject/web/images/nendoroids/"+nendoroid['number']+".jpg"
+			}).appendTo(".imgContent");
+
+			$("<div/>", {
+				"class": "informationsNumber",
+				text: "#"+nendoroid['number']
+			}).appendTo(".screenInformationsNendoroidsContent");
+		}
+
 		function generateUser(users){
-			var rightColumn = $(".rightColumn");
-			var leftColumn = $(".leftColumn");
+			var screenListNendoroids = $(".screenListNendoroids");
+			var screenInformationsNendoroids = $(".screenInformationsNendoroids");
 			var blockResponse = $(".response");
 			
 			console.log(users);
-			rightColumn.html('');
+			screenListNendoroids.html('');
 
 			$.each(users, function(u, user){
 				$("<div/>", {
@@ -363,59 +395,29 @@
 					text: user['username'],
 					
 					click: function(){
-
 						var myuser = user['username'];
-						var url = '{{ path("otaku_project_user", {'username': 'parameterValue'}) }}'; 
+						var url = '{{ path("user_profil", {'username': 'parameterValue'}) }}'; 
     					url = url.replace("parameterValue", myuser);
 						window.location.href = url;
 					}
-				}).appendTo(".rightColumn");
+				}).appendTo(".screenListNendoroids");
 			});
 			
 			$("<i/>", {
 				"class": "fas fa-user"					
 			}).appendTo(".cardUser");
 		}
-
-		function generateAllNendo(nendoroids){
+		
+		function getListsUser(){
 			$.ajax({
-				url: "{{ path('generate_list_ajax') }}",
-				method: "post"
-			})
-			.done(function(data){
-				var nendoroids = data['nendoroids'];
-				generateNendoroidCard(nendoroids);
-				getAllLists();
-				$('.loadScreen').fadeOut(1000);
-				// $("header h2").delay(1500).animate({left:0},1500);
-			});
-		}
-
-		function generateAllUsers(users){
-			$.ajax({
-				url: "{{ path('list_users_ajax') }}",
-				method: "post"
-			})
-			.done(function(data){
-				var users = data['users'];
-				generateUser(users);
-				$('.loadScreen').fadeOut(1000);
-			});
-		}
-
-		function getAllLists() {
-			$.ajax({
-				url: "{{ path('get_all_lists') }}",
+				url: "{{ path('get_user_lists') }}",
 				method: "post"
 			})
 			.done(function(data){
 				var allLists = data['nendoroids'];
 				console.log(allLists);
 				$.each(allLists, function(n, nendoroid){
-					$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas');
-					$(".cardNendoLikeButton"+nendoroid['id']).addClass('liked');
-					$(".cardNendoLikeButton"+nendoroid['id']).removeClass('far');
-					$(".cardNendoLikeButton"+nendoroid['id']).removeClass('notLiked');
+					$(".cardNendoLikeButton"+nendoroid['id']).addClass('fas liked').removeClass('far notLiked');
 				});
 			});
 		}

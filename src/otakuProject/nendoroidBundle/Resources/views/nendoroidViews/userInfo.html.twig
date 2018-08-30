@@ -3,15 +3,21 @@
 {% block body %}
 	
 	<nav class="getList">
-		<a href="{{ path('otaku_project_list') }}"><i class="hvr-shrink fas fa-list-ul"></i></a>
+		<a href="{{ path('nendoroids_list') }}">
+			<i class="hvr-shrink fas fa-list-ul"></i>
+		</a>
 	</nav>
 
 	<div class="loginlogout">
-		<a href="{{ path('fos_user_security_logout') }}"><i class="hvr-shrink fa-3x fas fa-power-off"></i></a>
+		<a href="{{ path('fos_user_security_logout') }}">
+			<i class="hvr-shrink fa-3x fas fa-power-off"></i>
+		</a>
 	</div>
 	
 	<div class="myProfil">
-		<a href="{{ path('otaku_project_user', {username : app.user.username }) }}"><i class="hvr-shrink fas fa-user"></i></a>
+		<a href="{{ path('user_profil', {username : app.user.username }) }}">
+			<i class="hvr-shrink fas fa-user"></i>
+		</a>
 	</div>
 
 	<section class="userInfo">
@@ -20,32 +26,49 @@
 			
 			<span id="currentUser" style="display: none;">{{currentUser}}</span>
 
+			<h2 class="titleLove">
+				<span class="firstLetter">L</span>ove
+				<span class="hvr-grow extend extendLove">
+					<i class="fas fa-expand-arrows-alt"></i>		
+				</span>
+			</h2>
 
-				<h1 class="titleLove"><span class="firstLetter">L</span>ove <span class="hvr-grow extend extendLove"><i class="fas fa-expand-arrows-alt"></i></span></h1>
 			<div class="listLove">
 				{% for nendoroid in loveList %}
-					<div class="cardLove{{nendoroid.id}} card cardLove"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
+					<div class="cardLove{{nendoroid.id}} card"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
 						<span id="{{nendoroid.id}}" class="remove removeLoveButton hvr-shrink">❌</span>
 					</div>
 				{% endfor %}
 			</div>
 
-				<h1 class="titleCollection"><span class="firstLetter">C</span>ollection <span class="hvr-grow extend extendCollection"><i class="fas fa-expand-arrows-alt"></i></span></h1>
+			<h2 class="titleCollection">
+				<span class="firstLetter">C</span>ollection
+				<span class="hvr-grow extend extendCollection">
+					<i class="fas fa-expand-arrows-alt"></i>		
+				</span>
+			</h2>
+
 			<div class="listCollection">
-					{% for nendoroid in collectionList %}
-						<div class="cardCollection{{nendoroid.id}} card"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
-							<span id="{{nendoroid.id}}" class="remove removeCollectionButton hvr-shrink">❌</span>
-						</div>
-					{% endfor %}
-				</div>
+				{% for nendoroid in collectionList %}
+					<div class="cardCollection{{nendoroid.id}} card"style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
+						<span id="{{nendoroid.id}}" class="remove removeCollectionButton hvr-shrink">❌</span>
+					</div>
+				{% endfor %}
+			</div>
 			
-				<h1 class="titlelike"><span class="firstLetter">L</span>ikes <span class="hvr-grow extend extendLike"><i class="fas fa-expand-arrows-alt"></i></span></h1>
+			<h2 class="titlelike">
+				<span class="firstLetter">L</span>ikes
+				<span class="hvr-grow extend extendLike">
+					<i class="fas fa-expand-arrows-alt"></i>
+				</span>
+			</h2>
+
 			<div class="listLike">
-					{% for nendoroid in likeList %}
-						<div class="cardLike{{nendoroid.id}} card" style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
-							<span id="{{nendoroid.id}}" class="remove removeLikeButton hvr-shrink">❌</span>
-						</div>
-					{% endfor %}
+				{% for nendoroid in likeList %}
+					<div class="cardLike{{nendoroid.id}} card" style="background-image: url('{{ asset('images/nendoroids/'~ nendoroid.number ~'.jpg') }}');" >
+						<span id="{{nendoroid.id}}" class="remove removeLikeButton hvr-shrink">❌</span>
+					</div>
+				{% endfor %}
 			</div>
 		</div>
 	</section>
@@ -90,13 +113,14 @@
 
 			removeLikeButton.on("click",function(){
 				var idNendo = $(this).attr('id');
+				$(".cardLike"+idNendo).remove();
 				$.ajax({
 					url: "{{ path('nendoroid_ajax') }}",
 					method: "post",
 					data: {idNendo : idNendo, action : "removeLike"}
 				})
 				.done(function(){
-					$(".cardLike"+idNendo).remove();
+					// $(".cardLike"+idNendo).remove();
 				});
 			});
 
@@ -191,11 +215,9 @@
 				}
 			});
 
-
-
-				$(".remove").on("click", function(){
-					$(this).addClass("hvr-push");
-					});
+			$(".remove").on("click", function(){
+				$(this).addClass("hvr-push");
+			});
 			
 			var currentUser = $("#currentUser").text();
 			if(currentUser == "true"){

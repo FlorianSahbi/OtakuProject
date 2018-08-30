@@ -149,7 +149,9 @@ table {
 
 a {
     text-decoration: none;
-    color: beige;
+    color: inherit;
+    display: inherit;
+    width: inherit;
 }
 
 /*Animations*/
@@ -221,5 +223,14 @@ a {
 
 .responseActive {
     bottom: 0;
+}
+
+.responseOk {
+    background-color: lightgreen;
+}
+
+.responseFail {
+    background-color: red;
+    color: beige;
 }
 /*Notifications End*/

@@ -1,252 +1,199 @@
 /*Header*/
-
-.bodyListContent {
-    display: flex;
-    justify-content: center;
-}
-
 header {
-    width: 100%;
     height: 7%;
-    background: linear-gradient(#ffbeca,#ff8da1);
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     position: fixed;
     top: 0;
     right: 0;
     z-index: 999;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    background: linear-gradient(#ffbeca,#ff8da1);
     border-bottom: beige 2px solid;
     box-shadow: 0px 0px 10px beige;
-    min-height: 50px;
+    margin-left: 15px;
 }
 
 header h2 {
     font-family: 'AudioWide';
     font-size: 2em;
-    position: relative;
-    left: -350px;
 }
 
 .rangeContent {
+    height: 100%;
+    width: auto;
     display: flex;
     flex-direction: column;
-    position: relative;
-    height: 100%;
-    width: 150px;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .rangeSet {
-    position: absolute;
-    font-size: 1em;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
     font-family: 'Orbitron';
     cursor: pointer;
 }
 
-.rangeContent {
-    width: 100px;
+.rangeSet i {
+    font-size: 1.1em;
+    color: black;
+    transform: rotate(-90deg);
+    transition: all 0.5s ease;
+}
+
+.rangeSet:hover i {
+    transform: rotate(0deg);
+}
+
+.rangeSetActive i {
+    transform: rotate(0deg);
 }
 
 .rangeButton {
-    font-size: 1em;
-    font-family: 'Orbitron';
-    position: absolute;
-    top: 54px;
-    text-align: center;
     height: 35px;
-    opacity: 0;
-    background: linear-gradient(#ff8298,pink);
-    display: flex !important;
+    width: 110px;
+    font-size: 1.1em;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 110px;
+    position: absolute;
+    top: 54px;
+    border: 3px solid pink;
     border-radius: 15px;
-    border: 1px solid black;
+    background: linear-gradient(#ff8298,pink);
+    box-shadow: 0px 0px 10px black;
+    font-family: 'Orbitron';
+    text-align: center;
     cursor: pointer;
+    opacity: 0;
 }
 
 header input[type="text"] {
-    width: 150px;
-    background-color: unset;
-    border-radius: 10px;
-    padding: 0px 10px;
-    font-family: 'Orbitron';
-    font-size: 1em;
-    letter-spacing: 2px;
     height: 35px;
-    /*flex: auto;*/
-}
-
-/*Subnav*/
-.subNav {
-    height: 160px;
-    width: 200px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    position: absolute;
-    top: -200px;
-    z-index: 1;
-    border: 2px beige solid;
-    background: linear-gradient(#ffbeca,#ff8da1);
-    border-radius: 0 0 10px 10px;
-}
-
-.myProfilButton {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.myProfilButton p {
-    flex: auto;
+    width: 150px;
+    padding: 0px 10px;
     font-size: 1.1em;
+    font-family: 'Orbitron';
+    border-radius: 10px;
+    background-color: unset;
 }
-
-.myProfilButton i {
-    margin: 0 10px;
-    color: black;
-    height: auto;
-    width: 20px;
-}
-
-.showUsersButton {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.showUsersButton p {
-    flex: auto;
-    font-size: 1.1em;
-}
-
-.showUsersButton i {
-    margin: 0 10px;
-    color: black;
-    height: auto;
-    width: 20px;
-}
-
-
-.showNendoroidsButton {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.showNendoroidsButton p {
-    flex: auto;
-    font-size: 1.1em;
-}
-
-.showNendoroidsButton i {
-    margin: 0 10px;
-    color: black;
-    height: auto;
-    width: 20px;
-}
-
-.logoutButton {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logoutButton p {
-    flex: auto;
-    font-size: 1.1em;
-}
-
-.logoutButton i {
-    margin: 0 10px;
-    color: black;
-    height: auto;
-    width: 20px;
-}
-
-
 
 .menuButton {
-    display: flex !important;
+    height: 100%;
+    width: auto;
+    display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Orbitron';
-    letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.5s ease;  
 }
 
 .menuButton i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
     color: black;
+}
+
+.menuButton p {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    font-size: 1.3em;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    color: black;
+}
+/*Subnav*/
+.subNav {
+    height: 160px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    top: -200px;
+    right: 15px;
+    z-index: 1;
+    border: 2px beige solid;
+    border-radius: 0 0 10px 10px;
+    background: linear-gradient(#ffbeca,#ff8da1);
 }
 
-
-.myProfilButton, .showUsersButton, .showNendoroidsButton, .logoutButton {
-    height: 30px;
-    display: flex !important;
+.subMenuButton {
+    height: 50px;
+    width: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     font-family: 'Orbitron';
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.1s ease;
-    color: black !important;
+    border-radius: 5px;
 }
 
-.myProfilButton, .showUsersButton:hover, .showNendoroidsButton, .logoutButton:hover {
-    /*background-color: rgba(0,0,0,0.1);*/
+.subMenuButton:hover {
+    background-color: #ffc2cb;
 }
 
-
-.myProfilButton a, .logoutButton a { 
-    text-decoration: none !important;
-    color: black !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+.subMenuButton p {
+    flex: auto;
+    font-size: 1.1em;
 }
 
-.actionButton p {
-    margin-left: 1px;
-    font-size: 1.5em;
-    margin-bottom: 1px;
+.subMenuButton i {
+    margin: 0 10px;
+    color: black;
+    height: auto;
+    width: 20px;
 }
-
-
 /*Subnav End*/
 
 /*Header End*/
 
+/*Frame*/
+.showListButton {
+    height: 50px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    margin: 20px;
+    font-size: 3em;
+    border-radius: 50%;
+    color: beige;
+    cursor: pointer;
+    display: none;
+}
+
 #nendoroidsList {
     height: 100vh;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 0;
     background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),url(../images/otakuProjectBg.jpg);
     background-position: center;
     background-size: cover;
     overflow: hidden;
-    position: relative;
-    z-index: 0;
 }
 
 #nendoroidsList .content {
@@ -259,8 +206,7 @@ header input[type="text"] {
 
 
 /*list Screen Nendoroids*/
-
-#nendoroidsList .rightColumn {
+#nendoroidsList .screenListNendoroids {
     height: 93%;
     width: 100%;
     display: flex;
@@ -353,11 +299,10 @@ header input[type="text"] {
     transition: all 0.5s ease;
 }
 
-.testeffect {
+.displayCardInformations {
     margin: 0% !important;
     opacity: 1 !important;
 }
-
 
 .cardNendo .cardNendoMoreInformations {
     color: beige;
@@ -381,7 +326,7 @@ header input[type="text"] {
     /*display: none;*/
 }
 
-.testeffect2 {
+.displayButtonMoreInformations {
     height: 30px !important;
     opacity: 1 !important;
 }
@@ -391,25 +336,7 @@ header input[type="text"] {
 
 /*informations Screen Nendoroids*/
 
-.showListButton {
-    height: 50px;
-    width: 50px;
-    margin: 20px;
-    font-size: 3em;
-    border-radius: 50%;
-    color: beige;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    display: none;
-}
-
-.leftColumn {
+.screenInformationsNendoroids {
     height: 100%;
     width: 100%;
     display: flex;
@@ -420,7 +347,7 @@ header input[type="text"] {
     z-index: 0;
 }
 
-.leftColumnContent {
+.screenInformationsNendoroidsContent {
     height: 100%; 
     width: 100%; 
     display: flex; 
@@ -476,7 +403,6 @@ header input[type="text"] {
 }
 
 /*informations Screen Nendoroids End*/
-
 
 .cardUser {
     color: beige;

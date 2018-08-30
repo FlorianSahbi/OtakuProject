@@ -1,52 +1,34 @@
+# views
 
-
-otaku_project_list:
+nendoroids_list:
     path: /list
     defaults:
-      _controller: otakuProjectnendoroidBundle:Nendoroid:list
+      _controller: otakuProjectnendoroidBundle:Nendoroid:nendoroidsList
 
-otaku_project_list_alt:
-    path: /listAlt
-    defaults:
-      _controller: otakuProjectnendoroidBundle:Nendoroid:listAlt
-
-otaku_project_user:
+user_profil:
     path: /user/{username}
     defaults:
-      _controller: otakuProjectnendoroidBundle:Nendoroid:userInfo
+      _controller: otakuProjectnendoroidBundle:Nendoroid:userProfil
 
-get_all_lists:
-    path: /allLists
+# get data
+
+get_nendoroids:
+  path: /get/nendoroids
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:getNendoroids
+    methods: [post]
+
+get_users:
+  path: /get/users
+  defaults:
+    _controller: otakuProjectnendoroidBundle:Nendoroid:getUsers
+    methods: [post]
+
+get_user_lists:
+    path: /get/lists
     defaults:
-      _controller: otakuProjectnendoroidBundle:Nendoroid:getUserListsAjax
+      _controller: otakuProjectnendoroidBundle:Nendoroid:getUserLists
       methods: [post]
-
-# otaku_project_edit:
-#     path: /edit/{idNendo}
-#     defaults:
-#       _controller: otakuProjectnendoroidBundle:Nendoroid:edit
-
-# AJAX List
-
-generate_list_ajax:
-  path: /generate/list
-  defaults:
-    _controller: otakuProjectnendoroidBundle:Nendoroid:generateList
-    methods: [post]
-
-generate_list_range_ajax:
-  path: /generate/listRange
-  defaults:
-    _controller: otakuProjectnendoroidBundle:Nendoroid:generateListRange
-    methods: [post]
-
-nendoroid_ajax:
-  path: /listNendo
-  defaults:
-    _controller: otakuProjectnendoroidBundle:Nendoroid:nendoroidAjax
-    methods: [post]
-
-# AJAX Recherche
 
 search_nendoroid_ajax:
   path: /search
@@ -54,8 +36,10 @@ search_nendoroid_ajax:
     _controller: otakuProjectnendoroidBundle:Nendoroid:searchAjax
     methods: [post]
 
-list_users_ajax:
-  path: /listUsers
+# add/remove lists
+
+nendoroid_ajax:
+  path: /listNendo
   defaults:
-    _controller: otakuProjectnendoroidBundle:Nendoroid:generateUsersAjax
+    _controller: otakuProjectnendoroidBundle:Nendoroid:nendoroidAjax
     methods: [post]

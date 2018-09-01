@@ -17,102 +17,43 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class NendoroidController extends Controller
 {
-  public function listAction()
+  // views
+  public function nendoroidsListAction()
   {
     return $this->render('otakuProjectnendoroidBundle:nendoroidViews:list.html.twig');
   }
 
-  public function getUserListsAjaxAction()
-  {
-    $loggedInUser = $this->getUser();
-
-    $loveList       = $loggedInUser->getNendoroidsLove();
-    $collectionList = $loggedInUser->getNendoroidsCollection();
-    $likeList       = $loggedInUser->getNendoroidsLike();
-
-    foreach ($loveList as $nendoroid) 
-    {
-      $loveListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
-    }
-    $loveListArray = ['state' => 'ok'];
-
-    foreach ($collectionList as $nendoroid) 
-    {
-      $collectionListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
-    }
-    $loveCollectionArray = ['state' => 'ok'];
-
-
-    foreach ($likeList as $nendoroid) 
-    {
-      $likeListArray[] = ['id' => $nendoroid->getId(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
-    }
-    $likeListArray = ['state' => 'ok'];
-
-    
-    $allList =  array_merge($loveListArray , $collectionListArray , $likeListArray);
-
-    return new JsonResponse(['nendoroids' => $allList]); 
-  }
-
-  public function userInfoAction($username)
+  public function userProfilAction($username)
   {
     $loggedInUser = $this->getUser()->getUsername();
+
     $em = $this->getDoctrine()->getManager();
     $repositoryUser = $em->getRepository('otakuProjectUserBundle:User');
     $userToSee = $repositoryUser->findByUsername($username);
 
-    if($loggedInUser == $userToSee[0]){
+    if($loggedInUser == $userToSee[0])
+    {
       $currentUser = "true";
     }
-    else {
+    else 
+    {
       $currentUser = "false";
     }
-
-    $loveList       = $userToSee[0]->getNendoroidsLove();
-    $collectionList = $userToSee[0]->getNendoroidsCollection();
-    $likeList       = $userToSee[0]->getNendoroidsLike();
     
     return $this->render('otakuProjectnendoroidBundle:nendoroidViews:userInfo.html.twig', 
-    ['likeList' => $likeList, 'loveList' => $loveList, 'collectionList' => $collectionList, 'currentUser' => $currentUser, 'usernamesProfil' => $userToSee[0]]);
+    ['currentUser' => $currentUser, 'usernamesProfil' => $userToSee[0]]);
   }
 
-  public function generateListAction()
-  {
-    $em = $this->getDoctrine()->getManager();
-    $repositoryNendo = $em->getRepository(Nendoroid::class);
-    // $nendoroids = $repositoryNendo->findAll(); // Too much figure too load, not usefull
-    $nendoroids = $repositoryNendo->findByRangeNumber(9);
-
-
-    foreach ($nendoroids as $nendoroid) 
-    {
-      $arrayNendoroids[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber()];
-    }
-    return new JsonResponse(['nendoroids' => $arrayNendoroids]);    
-  }
-
-  public function generateUsersAjaxAction()
-  {
-    $em = $this->getDoctrine()->getManager();
-    $repositoryUsers = $em->getRepository('otakuProjectUserBundle:User');
-    $users = $repositoryUsers->findAll();
-
-    foreach ($users as $user) 
-    {
-      $arrayUsers[] = ['id' => $user->getId(), 'username' => $user->getUsername()];
-    }
-    return new JsonResponse(['users' => $arrayUsers]);    
-  }
-
-  public function generateListRangeAction(Request $request)
+  // get data
+  public function getNendoroidsAction(Request $request)
   {
     $em = $this->getDoctrine()->getManager();
     $repositoryNendo = $em->getRepository(Nendoroid::class);
 
-    $range = $request->request->get('range');
+    $range = $request->request->get('rangeId');
     switch ($range) 
     {
+      case 'all'    : $nendoroids = $repositoryNendo->findAll()           ; break;
       case '001-100': $nendoroids = $repositoryNendo->findByRangeNumber(1); break;
       case '101-200': $nendoroids = $repositoryNendo->findByRangeNumber(2); break;
       case '201-300': $nendoroids = $repositoryNendo->findByRangeNumber(3); break;
@@ -131,20 +72,90 @@ class NendoroidController extends Controller
     return new JsonResponse(['nendoroids' => $arrayNendoroids]);
   }  
 
+  public function getUsersAction()
+  {
+    $em = $this->getDoctrine()->getManager();
+    $repositoryUsers = $em->getRepository('otakuProjectUserBundle:User');
+    $users = $repositoryUsers->findAll();
+
+    foreach ($users as $user) 
+    {
+      $arrayUsers[] = ['id' => $user->getId(), 'username' => $user->getUsername()];
+    }
+    return new JsonResponse(['users' => $arrayUsers]);    
+  }
+
+  public function getUserListsAction(Request $request)
+  {
+    $usernameTargetLists = $request->request->get('usernameTargetLists');
+
+    $em = $this->getDoctrine()->getManager();
+    $repositoryUsers = $em->getRepository('otakuProjectUserBundle:User');
+    $user = $repositoryUsers->findByUsername($usernameTargetLists);
+
+    // $loggedInUser = $this->getUser();
+
+    $loveList       = $user[0]->getNendoroidsLove();
+    $collectionList = $user[0]->getNendoroidsCollection();
+    $likeList       = $user[0]->getNendoroidsLike();
+
+    if($loveList->isEmpty())
+    {
+      $loveListArray[] = ['list' => 'none', 'notice' => 'The love list is empty.'];
+    }
+    else 
+    {
+      foreach ($loveList as $nendoroid) 
+      {
+        $loveListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'love'];
+      }
+    } 
+
+    if ($collectionList->isEmpty())
+    {
+      $collectionListArray[] = ['list' => 'none', 'notice' => 'The collection list is empty.'];
+    }
+    else
+    {
+      foreach ($collectionList as $nendoroid) 
+      {
+        $collectionListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'collection'];
+      }
+    }
+
+    if($likeList->isEmpty())
+    {
+      $likeListArray[] = ['list' => 'none', 'notice' => 'The like list is empty.'];
+    }
+    else
+    {
+      foreach ($likeList as $nendoroid) 
+      {
+        $likeListArray[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber(), 'list' => 'like'];
+      }
+    }
+
+    $allList =  array_merge($loveListArray , $collectionListArray , $likeListArray);
+
+    return new JsonResponse(['nendoroids' => $allList]); 
+  }
+
   public function searchAjaxAction(Request $request)
   {
     $keyword = $request->request->get('key');
+
     $em = $this->getDoctrine()->getManager();
     $repositoryNendo = $em->getRepository(Nendoroid::class);
     $nendoroids = $repositoryNendo->likeSearch($keyword);
 
     foreach ($nendoroids as $nendoroid) 
     {
-      $arrayNendo[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber()];
+      $arrayNendo[] = ['id' => $nendoroid->getId(), 'name' => $nendoroid->getName(), 'name' => $nendoroid->getName(), 'number' => $nendoroid->getNumber()];
     }
     return new JsonResponse(['nendoroids' => $arrayNendo]);    
   }
 
+  // add/remove lists
   public function nendoroidAjaxAction(Request $request)
   {
     $user = $this->getUser();
@@ -158,66 +169,69 @@ class NendoroidController extends Controller
     switch ($action) {
       case 'addLike': 
         $user->addNendoroidLike($nendoroid);
-        $response[] = ["message" => "You liked this Nendoroid"]; 
+        $response[] = ["message" => "You liked this Nendoroid."]; 
     break;
       case 'addLove': 
         $user->addNendoroidLove($nendoroid);
-        $response[] = ["message" => "You shown your interest for this Nendoroid"]; 
+        $response[] = ["message" => "You shown your interest for this Nendoroid."]; 
     break;
       case 'addCollection': 
         $user->addNendoroidCollection($nendoroid);
-        $response[] = ["message" => "Nendoroid added to your collection"]; 
+        $response[] = ["message" => "Nendoroid added to your collection."]; 
     break;
       case 'removeLike': 
         $user->removeNendoroidLike($nendoroid);
-        $response[] = ["message" => 'You doesnt like it anymore']; 
+        $response[] = ["message" => "You doesnt like it anymore."]; 
     break;
       case 'removeLove': 
         $user->removeNendoroidLove($nendoroid); 
-        $response[] = ["message" => 'This Nendoroid doesnt interest you anymore'];
+        $response[] = ["message" => "This Nendoroid doesnt interest you anymore."];
     break;
       case 'removeCollection': 
         $user->removeNendoroidCollection($nendoroid);
-        $response[] = ["message" => "Nendoroid removed from your collection"]; 
+        $response[] = ["message" => "Nendoroid removed from your collection."]; 
     break;
     }
 
     $em->persist($nendoroid);
     $em->flush();
     
-    $response[] = ["message" => 'Figurine bien aime'];
     return new JsonResponse(['message' => $response]);
   } 
 
-  public function redirectUserAjaxAction(Request $request) {
-    $username = $request->request->get("user");
-    return $this->redirectToRoute('otaku_project_user', array('username' => $username));
+  public function likeCptAction(Request $request)
+  {
+    $idNendo = $request->request->get('idNendo');
+    $action = $request->request->get('action');
+    
+    $em = $this->getDoctrine()->getManager();
+    $repositoryNendo = $em->getRepository(Nendoroid::class);
+    $nendoroid = $repositoryNendo->find($idNendo);
+    $nendoroidCpt = $nendoroid->getCptLike();
+
+    if($action == "incCpt")
+    {
+      $nendoroidCptUpdate = $nendoroidCpt + 1;
+    }
+    else if($action == "decCpt")
+    {
+      $nendoroidCptUpdate = $nendoroidCpt - 1;
+    }
+
+    $nendoroid->setCptLike($nendoroidCptUpdate);
+    $em->persist($nendoroid);
+    $em->flush();
+    return new Response('');
   }
 
+  public function friendlistAction($username)
+  {    
+    $em = $this->getDoctrine()->getManager();
+    $repositoryUsers = $em->getRepository('otakuProjectUserBundle:User');
+    $user = $repositoryUsers->findByUsername($username);
+
+    $friendList = $user[0]->getFriends();
+
+    return $this->render('otakuProjectnendoroidBundle:nendoroidViews:test.html.twig', ['users' => $friendList] );
+  }
 }
-
-// En attente //
-
-  // public function editAction(Request $request, $idNendo)
-  // {
-  //   $em = $this->getDoctrine()->getManager();
-  //   $repositoryNendo = $em->getRepository(Nendoroid::class);
-  //   $nendoroid = $repositoryNendo->find($idNendo);
-
-  //   $form = $this->createForm(NendoroidType::class, $nendoroid);
-
-  //   if($request->isMethod('POST')) 
-  //   {
-  //     $form->handleRequest($request);
-
-  //     if($form->isValid()) 
-  //     {
-  //       $em = $this->getDoctrine()->getManager();
-  //       $em->persist($nendoroid);
-  //       $em->flush();
-
-  //       return $this->redirectToRoute('otaku_project_list');
-  //     }
-  //   }
-  //   return $this->render('otakuProjectnendoroidBundle:nendoroidViews:add.html.twig', array('form' => $form->createView()));
-  // }

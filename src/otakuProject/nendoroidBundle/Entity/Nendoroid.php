@@ -50,6 +50,13 @@ class Nendoroid
     private $preview;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="cptLike", type="integer", nullable=true)
+     */
+    private $cptLike;
+
+    /**
      * @ORM\ManyToOne(targetEntity="otakuProject\nendoroidBundle\Entity\Serie")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -213,5 +220,29 @@ class Nendoroid
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+     * Set cptLike
+     *
+     * @param integer $cptLike
+     *
+     * @return Nendoroid
+     */
+    public function setCptLike($cptLike)
+    {
+        $this->cptLike = $cptLike;
+
+        return $this;
+    }
+
+    /**
+     * Get cptLike
+     *
+     * @return integer
+     */
+    public function getCptLike()
+    {
+        return $this->cptLike;
     }
 }

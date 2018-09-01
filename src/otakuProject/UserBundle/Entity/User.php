@@ -20,10 +20,31 @@ class User extends BaseUser
    */
   protected $id;
 
-    /**
-   * @ORM\OneToOne(targetEntity="otakuProject\nendoroidBundle\Entity\Nendoroid", cascade={"persist"})
+  /**
+   * @ORM\ManyToMany(targetEntity="otakuProject\UserBundle\Entity\User", cascade={"persist"})
+     @ORM\JoinTable(name="user_friends")
    */
-  private $firstNendo;
+  private $friends;
+
+  public function __constructFriends()
+  {
+      $this->friends = new ArrayCollection();
+  }
+
+  public function addFriend(User $friend)
+  {
+      $this->friends[] = $friend;
+  }
+
+  public function removeFriend(User $friend)
+  {
+      $this->friends->removeElement($friend);
+  }
+
+  public function getFriends()
+  {
+      return $this->friends;
+  }
 
   /**
    * @ORM\ManyToMany(targetEntity="otakuProject\nendoroidBundle\Entity\Nendoroid", cascade={"persist"})

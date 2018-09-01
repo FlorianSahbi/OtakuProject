@@ -18,4 +18,12 @@ class NendoroidRepository extends \Doctrine\ORM\EntityRepository
 
   		return $results;
 	}
+
+	public function mostLikedNendos()
+	{
+		$query = $this->_em->createQuery('SELECT n FROM otakuProjectnendoroidBundle:Nendoroid n ORDER BY n.cptLike DESC ');
+	  	$results = $query->getResult();
+
+  		return $results;
+	}
 }
